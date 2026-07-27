@@ -1,3 +1,22 @@
 @use './reset.css';
 @use './variables' as *;
 @use './mixins' as *;
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+body {
+  background-color: $c-bg;
+  color: $c-text;
+  line-height: $lh-base;
+}

@@ -1,6 +1,8 @@
 ---
 import '../styles/global.scss';
 
+import { content } from '../data/content';
+
 import Loading from '../components/Loading.astro';
 import ScrollIndicator from '../components/ScrollIndicator.astro';
 import Header from '../components/Header.astro';
@@ -15,6 +17,10 @@ import Footer from '../components/Footer.astro';
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
+    <!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap" rel="stylesheet">
 	</head>
 	<body>
 		<Loading />

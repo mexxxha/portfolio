@@ -8,10 +8,12 @@ import Works from '../sections/Skills.astro';
 import Blog from '../sections/Blog.astro';
 import Contact from '../sections/Contact.astro';
 
+import { content } from '../data/content';
+
 ---
 
 <BaseLayout>
-	<Hero />
+	<Hero logo={content.logo} content={content.hero} sectionTitle={content.sectionTitles.hero} />
 	<About />
 	<Skills />
 	<Works />

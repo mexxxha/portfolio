@@ -4,8 +4,16 @@ $bp-sp: 425;
 
 // カラー
 $c-text: #ccc8be;
-$c-bg: 191918;
+$c-bg: #191918;
+
+// オーバーレイ
+$overlay: rgba(10, 10, 8, 0.3);
 
 // フォントサイズ
 
+// 行高
+$lh-base: 1.8;
+
 // z-index
+$z-base: 1;
+$z-2: $z-base + 1;

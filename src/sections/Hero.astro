@@ -1,9 +1,33 @@
 ---
+import { Image } from 'astro:assets';
+import type { Logo, SectionTitleContent, HeroContent } from '../types/type';
+import SectionTitle from '../components/SectionTitle.astro';
+
+interface Props {
+  logo: Logo;
+  sectionTitle: SectionTitleContent;
+  content: HeroContent;
+}
+
+const { logo, sectionTitle, content } = Astro.props;
 ---
 
 <section class="hero">
+  <Image
+    class="hero__image"
+    src={content.image}
+    alt={content.imageAlt}
+    layout="full-width"
+    loading="eager"
+  />
+  <h1 class="hero__logo">
+    <a href="/" class="hero__logo_link" aria-label="ホームへ戻る">
+      <Image class="hero__logo_img" src={logo.src} alt={logo.alt} />
+    </a>
+  </h1>
   <div class="hero__inner">
-
+    <SectionTitle content={sectionTitle} />
+    <p class="hero__scroll">SCROLL</p>
   </div>
 </section>
 
@@ -11,5 +35,66 @@
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
   
-	
+	.hero {
+    position: relative;
+    width: 100%;
+    height: 100svh;
+
+    &::before {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      background-color: $overlay;
+      z-index: $z-base;
+    }
+
+    &__image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    &__logo {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      z-index: $z-2;
+
+      &_link {
+
+      }
+      &_img {
+        width: auto;
+        height: 50px;
+      }
+    }
+    &__inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 24px;
+      z-index: $z-2;
+    }
+    &__scroll {
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      writing-mode: vertical-rl;
+    }
+  }
+
+  @include tab {
+
+  }
+  @include sp {
+    
+  }
 </style>
