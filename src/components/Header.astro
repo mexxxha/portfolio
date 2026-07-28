@@ -1,15 +1,188 @@
 ---
+import { Icon } from 'astro-icon/components';
+import { content } from '../data/content';
+
+const { nav, socials } = content;
 ---
 
 <header class="header">
-  <div class="header__inner">
-
-  </div>
+  <nav class="header__nav">
+    <div class="header__nav_indicator"></div>
+    <ul class="header__nav_list">
+      {
+        nav.map((item) => (
+          <li>
+            <a class="header__nav_link" href={item.href}>{item.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  <!-- Tablet / SP : ハンバーガーボタン -->
+  <button class="header__hamburger" aria-label="メニューを開く" aria-expanded="false" type="button">
+    <span class="header__hamburger_line" aria-hidden="true"></span>
+    <span class="header__hamburger_line" aria-hidden="true"></span>
+  </button>
+  <!-- Tablet/SP：全画面オーバーレイ -->
+  <!--<div class="header__overlay" aria-hidden="true">
+     <ul class="header__overlay_list">
+      {
+        nav.map((item) => (
+          <li>
+            <a href={item.href}>{item.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </div> -->
+  <ul class="header__sns">
+    {
+      socials.map((item) => (
+        <li class="header__sns_item">
+          <a class="header__sns_link" href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.label}>
+            <Icon class="header__sns_icon" name={item.icon} />
+            <span class="header__sns_label">{item.label}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
 </header>
+
+<style is:inline>
+  .header__nav_link {
+    font-size: 0.6rem; /* インジケーターアニメーションの制御の為、切り出している */
+  }
+</style>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
-  
-	
+
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 24px;
+    z-index: $z-base + 2;
+
+    &__nav {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+
+      &_list {
+        position: relative;
+        display: flex;
+        border: 0.5px solid $c-text;
+        border-radius: 5px;
+        gap: 8px;
+        padding: 6px 16px;
+        line-height: 1;
+        z-index: $z-base - 1;
+      }
+
+      &_link {
+        position: relative;
+        display: inline-block;
+        padding: 6px 12px;
+        letter-spacing: 0.1em;
+        z-index: $z-base;
+        transition: color 0.35s ease;
+
+        &.is-active {
+          color: $c-text-a;
+        }
+      }
+
+      &_indicator {
+        position: absolute;
+        top: 0;
+        left: 0;
+        border: 0.5px solid $c-text;
+        border-radius: 5px;
+        background-color: $c-bg-a;
+        z-index: $z-base - 1;
+        transition:
+          transform 0.35s ease,
+          width 0.35s ease,
+          height 0.35s ease;
+      }
+    }
+
+    &__hamburger {
+      &_line {
+
+      }
+    }
+
+    &__sns {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+
+      &_item {
+        
+      }
+
+      &_link {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        max-width: 30px;
+        min-width: 30px;
+        height: 30px;
+        padding: 0;
+        gap: 0;
+        border: 0.5px solid $c-text;
+        border-radius: 15px;
+        font-size: 0.6rem;
+        letter-spacing: 0.06em;
+        overflow: hidden; 
+        transition:
+          width 0.5s ease,
+          max-width 0.5s ease,
+          padding 0.5s ease,
+          gap 0.5s ease;
+        
+        &:hover {
+          justify-content: flex-start;
+          width: 5.8rem; 
+          max-width: 5.8rem;
+          padding: 0 10px;
+          gap: 6px;
+        }
+      }
+
+      &_icon {
+        flex-shrink: 0;
+        width: 12px;
+        height: 12px;
+      }
+
+      &_label {
+        max-width: 0;
+        opacity: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        transition:
+          max-width 0.5s ease,
+          opacity 0.5s ease;
+      }
+      &_link:hover &_label {
+        max-width: 5rem;
+        opacity: 1;
+      }
+    }
+  }
 </style>
+
+<script>
+  import '../scripts/nav-indicator';
+</script>

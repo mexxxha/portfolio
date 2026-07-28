@@ -4,7 +4,10 @@ $bp-sp: 425;
 
 // カラー
 $c-text: #ccc8be;
+$c-text-a: #191918;
 $c-bg: #191918;
+$c-bg-a: #ccc8be;
+$c-border: rgba(204, 200, 190, 0.3);
 
 // オーバーレイ
 $overlay: rgba(10, 10, 8, 0.3);
@@ -16,4 +19,3 @@ $lh-base: 1.8;
 
 // z-index
 $z-base: 1;
-$z-2: $z-base + 1;

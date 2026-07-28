@@ -1,9 +1,13 @@
 ---
+import { content } from '../data/content';
+import SectionTitle from '../components/SectionTitle.astro';
+
+const { sectionTitles } = content;
 ---
 
-<section class="works">
+<section class="works" id="works">
   <div class="works__inner">
-
+    <SectionTitle content={sectionTitles.works} />
   </div>
 </section>
 
@@ -11,5 +15,11 @@
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
   
-	
+	.works {
+    width: 100%;
+
+    &__inner {
+
+    }
+  }
 </style>

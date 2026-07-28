@@ -1,9 +1,14 @@
 ---
+import { content } from '../data/content';
+import SectionTitle from '../components/SectionTitle.astro';
+
+
+const { sectionTitles } = content;
 ---
 
 <section class="blog">
   <div class="blog__inner">
-
+    <SectionTitle content={sectionTitles.blog} />
   </div>
 </section>
 

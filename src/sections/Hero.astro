@@ -1,22 +1,17 @@
 ---
 import { Image } from 'astro:assets';
-import type { Logo, SectionTitleContent, HeroContent } from '../types/type';
+import { content } from '../data/content';
 import SectionTitle from '../components/SectionTitle.astro';
 
-interface Props {
-  logo: Logo;
-  sectionTitle: SectionTitleContent;
-  content: HeroContent;
-}
 
-const { logo, sectionTitle, content } = Astro.props;
+const { logo, hero, sectionTitles } = content;
 ---
 
 <section class="hero">
   <Image
     class="hero__image"
-    src={content.image}
-    alt={content.imageAlt}
+    src={hero.image}
+    alt={hero.imageAlt}
     layout="full-width"
     loading="eager"
   />
@@ -26,7 +21,7 @@ const { logo, sectionTitle, content } = Astro.props;
     </a>
   </h1>
   <div class="hero__inner">
-    <SectionTitle content={sectionTitle} />
+    <SectionTitle content={sectionTitles.hero} />
     <p class="hero__scroll">SCROLL</p>
   </div>
 </section>
@@ -65,14 +60,14 @@ const { logo, sectionTitle, content } = Astro.props;
       position: absolute;
       top: 24px;
       left: 24px;
-      z-index: $z-2;
+      z-index: $z-base + 2;
 
       &_link {
 
       }
       &_img {
         width: auto;
-        height: 50px;
+        height: 50px; // ロゴサイズはここで調整
       }
     }
     &__inner {
@@ -82,7 +77,7 @@ const { logo, sectionTitle, content } = Astro.props;
       justify-content: space-between;
       align-items: flex-end;
       padding: 24px;
-      z-index: $z-2;
+      z-index: $z-base + 1;
     }
     &__scroll {
       font-size: 0.6rem;

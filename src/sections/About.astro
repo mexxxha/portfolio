@@ -1,9 +1,33 @@
 ---
+import { Image } from 'astro:assets';
+import { content } from '../data/content';
+import SectionTitle from '../components/SectionTitle.astro';
+
+const { sectionTitles } = content;
+const { profile } = content.about;
 ---
 
-<section class="about">
-  <div class="sbout__inner">
-
+<section class="about" id="about">
+  <div class="about__inner">
+    <SectionTitle content={sectionTitles.about}/>
+    <div class="about__profile">
+      <div class="about__image_wrap">
+        <Image class="about__img" src={profile.image} alt={profile.alt} />
+      </div>
+      <div class="about__profile_body">
+        <h3 class="about__profile_name">{profile.name}</h3>
+        <p class="about__profile_role">{profile.role}</p>
+        <p class="about__profile_bio">{profile.bio}</p>
+      </div>
+    </div>
+    <dl class="about__meta">
+      {profile.facts.map((fact) => (
+        <div class="about__meta_row">
+          <dt class="about__meta_label">{fact.label}</dt>
+          <dd class="about__meta_value">{fact.value}</dd>
+        </div>
+      ))}
+    </dl>
   </div>
 </section>
 
@@ -11,5 +35,107 @@
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
   
-	
+  .about {
+    width: 100%;
+
+    &__inner {
+      margin: 0 auto;
+    }
+
+    &__profile {
+      display: flex;
+      gap: 60px;
+      margin-top: 60px;
+
+      &_body {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      &_name {
+        font-size: 1.15rem;
+        letter-spacing: 0.12em;
+        line-height: 1.2;
+      }
+
+      &_role {
+        font-size: 1.125rem;
+        letter-spacing: 0.08em;
+        opacity: 0.7;
+      }
+
+      &_bio {
+        font-size: 0.875rem;
+        line-height: 2;
+        letter-spacing: 0.06em;
+        opacity: 0.7;
+      }
+    }
+
+    &__image_wrap {
+      flex-shrink: 0;
+      width: 280px;
+      border: 0.5px solid rgba(204, 200, 190, 0.3);
+    }
+
+    &__meta {
+      border-top: 0.5px solid $c-border;
+      border-bottom: 0.5px solid $c-border;
+      margin-top: 80px;
+
+      &_row {
+        display: flex;
+        align-items: baseline;
+        gap: 24px;
+        padding: 12px 0;
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+
+        & + & {
+          border-top: 0.5px solid $c-border;
+        }
+      }
+
+      &_label {
+        flex-shrink: 0;
+        width: 100px;
+        opacity: 0.6;
+      }
+
+      &_value {
+        flex: 1;
+      }
+    }
+  }
+
+  @include tab {
+    .about {
+      &__profile {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+      }
+      &__image_wrap {
+        width: 220px;
+      }
+      &__meta {
+        margin-top: 40px;
+      }
+    }
+  }
+
+  @include sp {
+    .about {
+      &__image_wrap {
+        width: 180px;
+      }
+      &__meta {
+
+        &_label {
+          width: 80px;
+        }
+      }
+    }
+  }
 </style>

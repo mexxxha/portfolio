@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../sections/Hero.astro';
 import About from '../sections/About.astro';
 import Skills from '../sections/Skills.astro';
-import Works from '../sections/Skills.astro';
+import Works from '../sections/Works.astro';
 import Blog from '../sections/Blog.astro';
 import Contact from '../sections/Contact.astro';
 
@@ -12,8 +12,8 @@ import { content } from '../data/content';
 
 ---
 
-<BaseLayout>
-	<Hero logo={content.logo} content={content.hero} sectionTitle={content.sectionTitles.hero} />
+<BaseLayout site={content.site} >
+	<Hero />
 	<About />
 	<Skills />
 	<Works />

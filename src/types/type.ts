@@ -1,10 +1,21 @@
 import type { ImageMetadata } from 'astro';
 
-export interface siteContent {
+export interface SiteContent {
   title: string;
   description: string;
   lang: string;
-  onImgae: string;
+  ogImage: string;
+}
+
+export interface SocialLink {
+  label: string;
+  href: string;
+  icon?: string;
+}
+
+export interface NavItem {
+  label: string;
+  href: string;
 }
 
 export interface Logo {
@@ -20,4 +31,24 @@ export interface SectionTitleContent {
 export interface HeroContent {
   image: ImageMetadata;
   imageAlt: string;
+}
+
+export interface AboutContent {
+  title: string;
+}
+
+export interface SkillsContent {
+  title: string;
+}
+
+export interface WorksContent {
+  title: string;
+}
+
+export interface BlogContent {
+  title: string;
+}
+
+export interface ContactContent {
+  title: string;
 }

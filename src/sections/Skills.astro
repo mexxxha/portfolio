@@ -1,15 +1,25 @@
 ---
+import { content } from '../data/content';
+import SectionTitle from '../components/SectionTitle.astro';
+
+const { sectionTitles } = content;
 ---
 
 <section class="skills">
   <div class="skills__inner">
-
+    <SectionTitle content={sectionTitles.skills} />
   </div>
 </section>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
-  
-	
+
+  .skills {
+    width: 100%;
+
+    &__inner {
+
+    }
+  }
 </style>
