@@ -75,12 +75,30 @@ export const content = {
       facts: [
         { label: 'Based in', value: 'Tokyo, Japan' },
         { label: 'Born', value: '1996' },
-        { label: 'Experience', value: '5 months'},
+        { label: 'Experience', value: '5 months' },
       ],
     },
   },
 
-  skills: {},
+  skills: {
+    skill: {
+      title: 'Skill',
+      items: [
+        { name: 'HTML', icon: 'simple-icons:html5' },
+        { name: 'CSS / SCSS', icon: 'simple-icons:sass' },
+        { name: 'JavaScript', icon: 'simple-icons:javascript' },
+        { name: 'Astro', icon: 'simple-icons:astro' },
+      ],
+    },
+    learning: {
+      title: 'Learning',
+      items: [
+        { name: 'React', icon: 'simple-icons:react' },
+        { name: 'TypeScript', icon: 'simple-icons:typescript' },
+        { name: 'Next.js', icon: 'simple-icons:nextdotjs' },
+      ],
+    },
+  },
 
   works: {},
 

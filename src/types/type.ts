@@ -37,10 +37,6 @@ export interface AboutContent {
   title: string;
 }
 
-export interface SkillsContent {
-  title: string;
-}
-
 export interface WorksContent {
   title: string;
 }
