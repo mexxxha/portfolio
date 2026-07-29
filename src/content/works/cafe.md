@@ -5,7 +5,7 @@ date: "2024-09"
 type: "client"
 tech: ["HTML", "CSS", "JavaScript"]
 categories: ["web site"]
-thumbnail: "../../assets/images/profile.jpg"
+thumbnail: ../../assets/profile.jpg
 liveUrl: "https://example.com"
 order: 1
 ---

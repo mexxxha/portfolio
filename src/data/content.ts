@@ -100,7 +100,5 @@ export const content = {
     },
   },
 
-  works: {},
-
   contact: {},
 } as const;

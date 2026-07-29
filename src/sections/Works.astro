@@ -1,25 +1,284 @@
 ---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import { content } from '../data/content';
 import SectionTitle from '../components/SectionTitle.astro';
 
 const { sectionTitles } = content;
+const works = await getCollection('works');
+const sorted = works.sort((a, b) => a.data.order - b.data.order);
+const items = sorted.slice(0, 2);
+const hasMore = sorted.length > 2;
+const isScrollSwap = items.length > 1;
 ---
 
 <section class="works" id="works">
   <div class="works__inner">
-    <SectionTitle content={sectionTitles.works} />
+    <div class:list={['works__track', { 'is-single': !isScrollSwap }]}>
+      <div class="works__sticky">
+        <SectionTitle content={sectionTitles.works} />
+        <article class="works__card">
+          {
+            items.map((entry, index) => (
+              <a class:list={['works__panel', { 'is-active': index === 0 }]} href={`/works/${entry.id}`} data-works-panel data-index={index} aria-label={`${entry.data.title}の詳細`}>
+                <div class="works__media">
+                  <Image class="works__image" src={entry.data.thumbnail} alt={entry.data.title} />
+                </div>
+
+                <div class="works__body">
+                  <p class="works__date">{entry.data.date}</p>
+                  <h3 class="works__title">{entry.data.title}</h3>
+                  <p class="works__description">{entry.data.description}</p>
+
+                  <ul class="works__tech">
+                    {entry.data.tech.map((tech) => (
+                      <li class="works__tech_item">{tech}</li>
+                    ))}
+                  </ul>
+                </div>
+              </a>
+            ))
+          }
+
+          {
+            isScrollSwap && (
+              <p class="works__pager" data-works-pager>
+                <span data-works-current>1</span> / {items.length}
+              </p>
+            )
+          }
+        </article>
+        {
+          hasMore && (
+            <p class="works__more">
+              <a class="works__more_link" href="/works">
+                もっと見る
+              </a>
+            </p>
+          )
+        }
+      </div>
+
+      {
+        isScrollSwap && (
+          <div class="works__steps" aria-hidden="true">
+            {items.map((_, index) => (
+              <div class="works__step" data-works-step data-index={index} />
+            ))}
+          </div>
+        )
+      }
+    </div>
   </div>
 </section>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
-  
-	.works {
-    width: 100%;
 
-    &__inner {
+  .works {
+    &__track {
+      position: relative;
 
+      &.is-single {
+        .works__sticky {
+          position: static;
+        }
+
+        .works__card {
+          height: auto;
+          max-height: none;
+        }
+
+        .works__panel.is-active {
+          position: relative;
+        }
+      }
+    }
+
+    &__sticky {
+      position: sticky;
+      top: 5rem;
+      z-index: $z-base;
+    }
+
+    &__card {
+      position: relative;
+      height: calc(100svh - 10rem);
+      max-height: 70svh;
+      overflow: hidden;
+      border: 0.5px solid $c-border;
+      border-radius: 8px;
+    }
+
+    &__panel {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+      padding: 24px;
+      min-height: 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px);
+      transition:
+        opacity 0.45s ease,
+        transform 0.45s ease,
+        visibility 0.45s ease;
+      pointer-events: none;
+
+      &.is-active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+    }
+
+    &__media {
+      min-height: 0;
+      height: 100%;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    &__image {
+      width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    &__date {
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+    }
+
+    &__title {
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    &__description {
+      font-size: 0.6rem;
+      line-height: 1.7;
+      opacity: 0.85;
+    }
+
+    &__tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+
+      &_item {
+        border: 0.5px solid $c-border;
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-size: 0.6rem;
+        letter-spacing: 0.06em;
+      }
+    }
+
+    &__link {
+      display: inline-flex;
+      margin-top: 8px;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    &__pager {
+      position: absolute;
+      right: 24px;
+      bottom: 16px;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+    }
+
+    &__steps {
+      pointer-events: none;
+    }
+
+    &__step {
+      height: 150vh;
+    }
+
+    &__more {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0 0;
+
+      &_link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 22px;
+        border: 0.5px solid $c-border;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        color: $c-text;
+        text-decoration: none;
+        transition:
+          color 0.3s ease,
+          background-color 0.3s ease,
+          border-color 0.3s ease;
+
+        &::after {
+          content: '→';
+          font-size: 0.75rem;
+          transition: transform 0.3s ease;
+        }
+
+        &:hover {
+          color: $c-text-a;
+          background-color: $c-bg-a;
+          border-color: $c-bg-a;
+
+          &::after {
+            transform: translateX(3px);
+          }
+        }
+
+        &:focus-visible {
+          outline: 1px solid $c-text;
+          outline-offset: 3px;
+        }
+      }
+    }
+  }
+
+  @include tab {
+    .works {
+      &__card {
+        height: calc(100svh - 8rem);
+        max-height: 65svh;
+      }
+
+      &__panel {
+        grid-template-columns: 1fr;
+      }
+
+      &__track.is-single {
+        .works__card {
+          max-height: none;
+        }
+      }
     }
   }
 </style>
+
+<script>
+  import '../scripts/worksScroll';
+</script>
