@@ -9,7 +9,7 @@ const { content } = Astro.props;
 ---
 
 <div class="section-title">
-  <p class="sub_title">{content.subtitle}</p>
+  <p class="sub_title" data-shuffle-text>{content.subtitle}</p>
   <h2 class="title">{content.title}</h2>
 </div>
 
@@ -30,3 +30,7 @@ const { content } = Astro.props;
     opacity: 0.7;
   }
 </style>
+
+<script>
+  import '../scripts/shuffleText';
+</script>
