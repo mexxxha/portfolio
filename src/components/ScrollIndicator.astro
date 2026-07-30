@@ -1,13 +1,56 @@
 ---
+
 ---
 
-<aside class="scroll__Indicator">
+<div class="scroll__ruler" aria-hidden="true">
+  <div class="scroll__ruler_ticks">
+    {Array.from({ length: 21 }, (_, index) => <span class:list={['scroll__ruler_tick', { 'is-major': index % 5 === 0 }]} />)}
+  </div>
 
-</aside>
+  <span class="scroll__ruler_marker"></span>
+</div>
 
 <style lang="scss">
-  @use '../styles/variables' as *;
-  @use '../styles/mixins' as *;
-  
-	
+  .scroll__ruler {
+    --progress: 0;
+
+    position: fixed;
+    top: 50%;
+    right: 24px;
+    z-index: 100;
+    width: 32px;
+    height: 180px;
+    transform: translateY(-50%);
+
+    &_ticks {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+    &_tick {
+      width: 8px;
+      height: 1px;
+      margin-left: auto;
+      background-color: currentColor;
+      opacity: 0.35;
+
+      &.is-major {
+        width: 15px;
+        opacity: 0.8;
+      }
+    }
+    &_marker {
+      position: absolute;
+      top: calc(var(--progress) * 100%);
+      right: -1px;
+      width: 20px;
+      height: 2px;
+      background-color: currentColor;
+      transform: translateY(-50%);
+      transition: top 0.1s linear;
+    }
+  }
 </style>
+
+<script src="../scripts/scrollIndicator.ts"></script>

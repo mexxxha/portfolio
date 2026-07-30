@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import { content } from '../../data/content';
+
+const { sectionTitles, site, contact } = content;
+---
+
+<BaseLayout
+  site={{
+    ...site,
+    title: `送信完了 | ${site.title}`,
+    description: 'お問い合わせ送信完了',
+  }}
+>
+  <section class="contact-thanks">
+    <div class="contact-thanks__inner">
+      <SectionTitle content={sectionTitles.contact} />
+      <h2 class="contact-thanks__title">送信が完了しました</h2>
+      <p class="contact-thanks__lead">
+        お問い合わせありがとうございます。内容を確認のうえ、ご連絡いたします。
+      </p>
+      <p class="contact-thanks__back">
+        <a class="contact-thanks__back_link" href="/">トップに戻る</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style lang="scss">
+  @use '../../styles/variables' as *;
+
+  .contact-thanks {
+    padding-top: 6rem;
+
+    &__inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    &__title {
+      margin: 40px 0 0;
+      font-size: 1.25rem;
+      letter-spacing: 0.08em;
+    }
+
+    &__lead {
+      margin: 16px 0 0;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      opacity: 0.85;
+      line-height: 1.8;
+    }
+
+    &__back {
+      display: flex;
+      margin: 48px 0 0;
+    }
+
+    &__back_link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border: 0.5px solid $c-border;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: $c-text;
+      text-decoration: none;
+      transition:
+        color 0.3s ease,
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+
+      &::before {
+        content: '←';
+      }
+
+      &:hover {
+        color: $c-text-a;
+        background-color: $c-bg-a;
+        border-color: $c-bg-a;
+      }
+    }
+  }
+</style>

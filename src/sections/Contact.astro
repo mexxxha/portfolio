@@ -1,15 +1,122 @@
 ---
+import { Icon } from 'astro-icon/components';
+import { content } from '../data/content';
+import SectionTitle from '../components/SectionTitle.astro';
+
+const { sectionTitles, contact, socials } = content;
 ---
 
-<section class="contact">
+<section class="contact" id="contact">
   <div class="contact__inner">
+    <SectionTitle content={sectionTitles.contact} />
 
+    <div class="contact__body">
+      <p class="contact__lead">{contact.lead}</p>
+
+      <ul class="contact__sns">
+        {
+          socials.map((item) => (
+            <li class="contact__sns_item">
+              <a class="contact__sns_link" href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.label}>
+                <Icon class="contact__sns_icon" name={item.icon} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="contact__more">
+        <a class="contact__more_link" href="/contact">
+          お問い合わせフォームへ
+          <span class="contact__more_arrow" aria-hidden="true">→</span>
+        </a>
+      </p>
+    </div>
   </div>
 </section>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
-  
-	
+
+  .contact {
+    width: 100%;
+
+    &__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    &__body {
+      margin: 48px auto;
+      max-width: 36rem;
+    }
+
+    &__lead {
+      text-align: center;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+    }
+
+    &__sns {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 28px 0 0;
+    }
+
+    &__sns_link {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border: 0.5px solid $c-border;
+      border-radius: 50%;
+      color: inherit;
+      opacity: 0.7;
+      transition:
+        opacity 0.3s ease,
+        border-color 0.3s ease;
+
+      &:hover {
+        opacity: 1;
+        border-color: $c-text;
+      }
+    }
+
+    &__sns_icon {
+      width: 14px;
+      height: 14px;
+    }
+
+    &__more {
+      margin: 36px 0;
+    }
+
+    &__more_link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: inherit;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 1;
+
+        .contact__more_arrow {
+          transform: translateX(4px);
+        }
+      }
+    }
+
+    &__more_arrow {
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+  }
 </style>

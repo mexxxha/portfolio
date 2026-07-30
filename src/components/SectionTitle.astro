@@ -1,0 +1,36 @@
+---
+import type { SectionTitleContent } from '../types/type';
+
+interface Props {
+  content: SectionTitleContent;
+}
+
+const { content } = Astro.props;
+---
+
+<div class="section-title">
+  <p class="sub_title" data-shuffle-text>{content.subtitle}</p>
+  <h2 class="title">{content.title}</h2>
+</div>
+
+<style lang="scss">
+  @use '../styles/variables' as *;
+  @use '../styles/mixins' as *;
+
+  .title {
+    font-family: 'Libre Barcode 39', cursive;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+  }
+
+  .sub_title {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    opacity: 0.7;
+  }
+</style>
+
+<script>
+  import '../scripts/shuffleText';
+</script>

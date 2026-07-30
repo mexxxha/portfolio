@@ -1,15 +1,100 @@
 ---
+import { Icon } from 'astro-icon/components';
+import { content } from '../data/content';
+import SectionTitle from '../components/SectionTitle.astro';
+
+const { sectionTitles } = content;
+const { skill, learning } = content.skills;
 ---
 
 <section class="skills">
   <div class="skills__inner">
-
+    <SectionTitle content={sectionTitles.skills} />
+    <div class="skills__content">
+      <div class="skills__skill">
+        <h3 class="skills__title">{skill.title}</h3>
+        <ul class="skills__list">
+          {
+            skill.items.map((item) => (
+              <li class="skills__item">
+                <Icon class="skills__icon" name={item.icon} />
+                <span class="skills__name">{item.name}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="skills__learning">
+        <h3 class="skills__title">{learning.title}</h3>
+        <ul class="skills__list">
+          {
+            learning.items.map((item) => (
+              <li class="skills__item">
+                <Icon class="skills__icon" name={item.icon} />
+                <span class="skills__name">{item.name}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
-  
-	
+
+  .skills {
+    width: 100%;
+
+    &__inner {
+      position: relative;
+      margin: 0 auto;
+    }
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+      margin-top: 60px;
+    }
+
+    &__title {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    &__skill,
+    &__learning {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    &__list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+      border-top: 0.5px solid $c-border;
+    }
+
+    &__item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    &__icon {
+      width: 20px;
+      height: 20px;
+    }
+    
+    &__name {
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+    }
+  }
 </style>

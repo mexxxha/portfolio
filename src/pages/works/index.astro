@@ -1,14 +1,208 @@
 ---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import { content } from '../../data/content';
+
+const { sectionTitles, site } = content;
+const works = (await getCollection('works')).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<BaseLayout>
-  
+<BaseLayout
+  site={{
+    ...site,
+    title: `Works | ${site.title}`,
+    description: '制作実績一覧',
+  }}
+>
+  <section class="works">
+    <div class="works__inner">
+      <SectionTitle content={sectionTitles.works} />
+      {
+        works.length === 0 ? (
+          <p class="works__empty">{sectionTitles.works.empty}</p>
+        ) : (
+          <ul class="works__list">
+            {works.map((entry) => (
+              <li class="works__item">
+                <a class="works__card" href={`/works/${entry.id}`}>
+                  <div class="works__media">
+                    <Image class="works__image" src={entry.data.thumbnail} alt={entry.data.title} />
+                  </div>
+
+                  <div class="works__body">
+                    <p class="works__date">{entry.data.date}</p>
+                    <h2 class="works__title">{entry.data.title}</h2>
+                    <p class="works__description">{entry.data.description}</p>
+
+                    <ul class="works__tech">
+                      {entry.data.tech.map((tech) => (
+                        <li class="works__tech_item">{tech}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+
+      <p class="works__back">
+        <a class="works__backLink" href="/">トップに戻る</a>
+      </p>
+    </div>
+  </section>
 </BaseLayout>
 
 <style lang="scss">
-  @use '../styles/variables' as *;
-  @use '../styles/mixins' as *;
-  
-	
+  @use '../../styles/variables' as *;
+  @use '../../styles/mixins' as *;
+
+  .works {
+    padding-top: 6rem;
+
+    &__inner {
+
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    &__empty {
+      margin: 32px 0 0;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      opacity: 0.7;
+      text-align: center;
+    }
+
+    &__list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin: 32px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    &__card {
+      display: grid;
+      gap: 16px;
+      height: 100%;
+      padding: 16px;
+      border: 0.5px solid $c-border;
+      border-radius: 8px;
+      color: inherit;
+      text-decoration: none;
+      transition:
+        border-color 0.3s ease,
+        transform 0.3s ease;
+
+      &:hover {
+        border-color: $c-text;
+        transform: translateY(-2px);
+      }
+    }
+
+    &__media {
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    &__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+
+      .works__card:hover & {
+        transform: scale(1.03);
+      }
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    &__date {
+      margin: 0;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+    }
+
+    &__title {
+      margin: 0;
+      font-size: 1.1rem;
+      line-height: 1.3;
+    }
+
+    &__description {
+      margin: 0;
+      font-size: 0.75rem;
+      line-height: 1.7;
+      opacity: 0.85;
+    }
+
+    &__tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 4px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    &__tech_item {
+      border: 0.5px solid $c-border;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+    }
+
+    &__back {
+      display: flex;
+      justify-content: center;
+      margin: 48px 0 0;
+    }
+
+    &__backLink {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border: 0.5px solid $c-border;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: $c-text;
+      transition:
+        color 0.3s ease,
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+
+      &::before {
+        content: '←';
+      }
+
+      &:hover {
+        color: $c-text-a;
+        background-color: $c-bg-a;
+        border-color: $c-bg-a;
+      }
+    }
+  }
+
+  @include tab {
+    .works {
+      &__list {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
 </style>

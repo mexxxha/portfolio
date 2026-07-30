@@ -2,10 +2,23 @@
 $bp-tab: 768px;
 $bp-sp: 425;
 
+// フォント
+$ff-base: 'Noto Sans JP', sans-serif;
+
 // カラー
 $c-text: #ccc8be;
-$c-bg: 191918;
+$c-text-a: #191918;
+$c-bg: #191918;
+$c-bg-a: #ccc8be;
+$c-border: rgba(204, 200, 190, 0.3);
+
+// オーバーレイ
+$overlay: rgba(10, 10, 8, 0.3);
 
 // フォントサイズ
 
+// 行高
+$lh-base: 1.8;
+
 // z-index
+$z-base: 1;

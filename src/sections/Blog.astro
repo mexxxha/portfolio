@@ -1,15 +1,205 @@
 ---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { content } from '../data/content';
+import SectionTitle from '../components/SectionTitle.astro';
+
+const { sectionTitles } = content;
+const posts = (await getCollection('blog')).sort((a, b) => a.data.order - b.data.order);
+const items = posts.slice(0, 2);
+const hasMore = posts.length > 2;
 ---
 
-<section class="blog">
+<section class="blog" id="blog">
   <div class="blog__inner">
+    <SectionTitle content={sectionTitles.blog} />
+    {
+      items.length === 0 ? (
+        <p class="blog__empty">{sectionTitles.blog.empty}</p>
+      ) : (
+        <>
+          <ul class="blog__list">
+            {items.map((entry) => (
+              <li class="blog__item">
+                <a class="blog__card" href={`/blog/${entry.id}`}>
+                  {entry.data.thumbnail && (
+                    <div class="blog__media">
+                      <Image class="blog__image" src={entry.data.thumbnail} alt={entry.data.title} />
+                    </div>
+                  )}
 
+                  <div class="blog__body">
+                    <p class="blog__date">{entry.data.date}</p>
+                    <h3 class="blog__title">{entry.data.title}</h3>
+                    <p class="blog__description">{entry.data.description}</p>
+
+                    {entry.data.tags && (
+                      <ul class="blog__tags">
+                        {entry.data.tags.map((tag) => (
+                          <li class="blog__tag_item">{tag}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          {hasMore && (
+            <p class="blog__more">
+              <a class="blog__more_link" href="/blog">
+                もっと見る
+              </a>
+            </p>
+          )}
+        </>
+      )
+    }
   </div>
 </section>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
-  
-	
+
+  .blog {
+    &__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    &__empty {
+      margin: 32px 0 0;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      opacity: 0.7;
+      text-align: center;
+    }
+
+    &__list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin: 32px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    &__card {
+      display: grid;
+      gap: 16px;
+      height: 100%;
+      padding: 16px;
+      border: 0.5px solid $c-border;
+      border-radius: 8px;
+      color: inherit;
+      text-decoration: none;
+      transition:
+        border-color 0.3s ease,
+        transform 0.3s ease;
+
+      &:hover {
+        border-color: $c-text;
+        transform: translateY(-2px);
+      }
+    }
+
+    &__media {
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    &__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+
+      .blog__card:hover & {
+        transform: scale(1.03);
+      }
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    &__date {
+      margin: 0;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+    }
+
+    &__title {
+      margin: 0;
+      font-size: 1.1rem;
+      line-height: 1.3;
+    }
+
+    &__description {
+      margin: 0;
+      font-size: 0.75rem;
+      line-height: 1.7;
+      opacity: 0.85;
+    }
+
+    &__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 4px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    &__tag_item {
+      border: 0.5px solid $c-border;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+    }
+
+    &__more {
+      display: flex;
+      justify-content: center;
+      margin: 32px 0 0;
+    }
+
+    &__more_link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border: 0.5px solid $c-border;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: $c-text;
+      text-decoration: none;
+      transition:
+        color 0.3s ease,
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+
+      &:hover {
+        color: $c-text-a;
+        background-color: $c-bg-a;
+        border-color: $c-bg-a;
+      }
+    }
+  }
+
+  @include tab {
+    .blog {
+      &__list {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
 </style>
