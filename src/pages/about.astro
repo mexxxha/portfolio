@@ -1,9 +1,143 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import About from '../sections/About.astro';
+import Skills from '../sections/Skills.astro';
+import { content } from '../data/content';
+
+const { site, aboutPage } = content;
 ---
+
+<BaseLayout
+  site={{
+    ...site,
+    title: `About | ${site.title}`,
+    description: 'プロフィール・経歴',
+  }}
+>
+  <div class="about-page">
+    <About detail />
+    <Skills />
+
+    <section class="about-page__history">
+      <h2 class="about-page__history_title">History</h2>
+      <ol class="about-page__history_list">
+        {
+          aboutPage.history.map((item) => (
+            <li class="about-page__history_item">
+              <p class="about-page__history_year">{item.year}</p>
+              <div class="about-page__history_body">
+                <h3 class="about-page__history_name">{item.title}</h3>
+                <p class="about-page__history_desc">{item.description}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <p class="about-page__back">
+      <a class="about-page__backLink" href="/">トップに戻る</a>
+    </p>
+  </div>
+</BaseLayout>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
-  
-	
+
+  .about-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 6rem 24px 0;
+
+    &__lead {
+      font-size: 0.85rem;
+      line-height: 2;
+      letter-spacing: 0.06em;
+      opacity: 0.8;
+    }
+
+    &__history {
+      margin-top: 100px;
+
+      &_title {
+        font-size: 0.8rem;
+        letter-spacing: 0.16em;
+        opacity: 0.6;
+      }
+
+      &_list {
+        margin-top: 24px;
+        border-top: 0.5px solid $c-border;
+      }
+
+      &_item {
+        display: flex;
+        gap: 32px;
+        padding: 20px 0;
+        border-bottom: 0.5px solid $c-border;
+      }
+
+      &_year {
+        flex-shrink: 0;
+        width: 80px;
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        opacity: 0.6;
+      }
+
+      &_name {
+        font-size: 0.9rem;
+        letter-spacing: 0.06em;
+      }
+
+      &_desc {
+        margin-top: 6px;
+        font-size: 0.75rem;
+        line-height: 1.8;
+        opacity: 0.7;
+      }
+    }
+
+    &__back {
+      display: flex;
+      justify-content: center;
+      margin: 80px 0 0;
+    }
+
+    &__backLink {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border: 0.5px solid $c-border;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: $c-text;
+      transition:
+        color 0.3s ease,
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+
+      &::before {
+        content: '←';
+      }
+
+      &:hover {
+        color: $c-text-a;
+        background-color: $c-bg-a;
+        border-color: $c-bg-a;
+      }
+    }
+  }
+
+  @include tab {
+    .about-page {
+      &__history_item {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+  }
 </style>

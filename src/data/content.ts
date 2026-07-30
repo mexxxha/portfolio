@@ -127,4 +127,12 @@ export const content = {
     ],
     copyright: 'Mecha',
   },
+
+  aboutPage: {
+    lead: 'Webのフロントエンドを中心に、デザインから実装まで一貫して手を動かしています。',
+    history: [
+      { year: '2024', title: '独学でWeb制作を開始', description: 'HTML / CSS / JavaScript を中心に学習。' },
+      { year: '2025', title: 'コーダーとして実務開始', description: 'LP・コーポレートサイトのコーディングを担当。' },
+    ],
+  },
 } as const;
