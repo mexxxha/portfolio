@@ -116,4 +116,15 @@ export const content = {
       submitLabel: '送信する',
     },
   },
+
+  footer: {
+    nav: [
+      { label: 'HOME', href: '/' },
+      { label: 'ABOUT', href: '/#about' },
+      { label: 'WORKS', href: '/works' },
+      { label: 'BLOG', href: '/blog' },
+      { label: 'CONTACT', href: '/contact' },
+    ],
+    copyright: 'Mecha',
+  },
 } as const;
