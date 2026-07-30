@@ -19,32 +19,35 @@ const works = (await getCollection('works')).sort((a, b) => a.data.order - b.dat
   <section class="works">
     <div class="works__inner">
       <SectionTitle content={sectionTitles.works} />
+      {
+        works.length === 0 ? (
+          <p class="works__empty">{sectionTitles.works.empty}</p>
+        ) : (
+          <ul class="works__list">
+            {works.map((entry) => (
+              <li class="works__item">
+                <a class="works__card" href={`/works/${entry.id}`}>
+                  <div class="works__media">
+                    <Image class="works__image" src={entry.data.thumbnail} alt={entry.data.title} />
+                  </div>
 
-      <ul class="works__list">
-        {
-          works.map((entry) => (
-            <li class="works__item">
-              <a class="works__card" href={`/works/${entry.id}`}>
-                <div class="works__media">
-                  <Image class="works__image" src={entry.data.thumbnail} alt={entry.data.title} />
-                </div>
+                  <div class="works__body">
+                    <p class="works__date">{entry.data.date}</p>
+                    <h2 class="works__title">{entry.data.title}</h2>
+                    <p class="works__description">{entry.data.description}</p>
 
-                <div class="works__body">
-                  <p class="works__date">{entry.data.date}</p>
-                  <h2 class="works__title">{entry.data.title}</h2>
-                  <p class="works__description">{entry.data.description}</p>
-
-                  <ul class="works__tech">
-                    {entry.data.tech.map((tech) => (
-                      <li class="works__tech_item">{tech}</li>
-                    ))}
-                  </ul>
-                </div>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+                    <ul class="works__tech">
+                      {entry.data.tech.map((tech) => (
+                        <li class="works__tech_item">{tech}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
 
       <p class="works__back">
         <a class="works__backLink" href="/">トップに戻る</a>
@@ -61,8 +64,17 @@ const works = (await getCollection('works')).sort((a, b) => a.data.order - b.dat
     padding-top: 6rem;
 
     &__inner {
+
       max-width: 1100px;
       margin: 0 auto;
+    }
+
+    &__empty {
+      margin: 32px 0 0;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      opacity: 0.7;
+      text-align: center;
     }
 
     &__list {

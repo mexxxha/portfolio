@@ -19,44 +19,39 @@ const posts = (await getCollection('blog')).sort((a, b) => a.data.order - b.data
   <section class="blog">
     <div class="blog__inner">
       <SectionTitle content={sectionTitles.blog} />
-
-      <ul class="blog__list">
-        {
-          posts.map((entry) => (
-            <li class="blog__item">
-              <a class="blog__card" href={`/blog/${entry.id}`}>
-                {
-                  entry.data.thumbnail && (
+      {
+        posts.length === 0 ? (
+          <p class="blog__empty">{sectionTitles.blog.empty}</p>
+        ) : (
+          <ul class="blog__list">
+            {posts.map((entry) => (
+              <li class="blog__item">
+                <a class="blog__card" href={`/blog/${entry.id}`}>
+                  {entry.data.thumbnail && (
                     <div class="blog__media">
-                      <Image
-                        class="blog__image"
-                        src={entry.data.thumbnail}
-                        alt={entry.data.title}
-                      />
+                      <Image class="blog__image" src={entry.data.thumbnail} alt={entry.data.title} />
                     </div>
-                  )
-                }
+                  )}
 
-                <div class="blog__body">
-                  <p class="blog__date">{entry.data.date}</p>
-                  <h2 class="blog__title">{entry.data.title}</h2>
-                  <p class="blog__description">{entry.data.description}</p>
+                  <div class="blog__body">
+                    <p class="blog__date">{entry.data.date}</p>
+                    <h2 class="blog__title">{entry.data.title}</h2>
+                    <p class="blog__description">{entry.data.description}</p>
 
-                  {
-                    entry.data.tags && (
+                    {entry.data.tags && (
                       <ul class="blog__tags">
                         {entry.data.tags.map((tag) => (
                           <li class="blog__tag_item">{tag}</li>
                         ))}
                       </ul>
-                    )
-                  }
-                </div>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+                    )}
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
 
       <p class="blog__back">
         <a class="blog__back_link" href="/">トップに戻る</a>
@@ -77,13 +72,20 @@ const posts = (await getCollection('blog')).sort((a, b) => a.data.order - b.data
       margin: 0 auto;
     }
 
+    &__empty {
+      margin: 32px 0 0;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      opacity: 0.7;
+      text-align: center;
+    }
+
     &__list {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 24px;
       margin: 32px 0 0;
       padding: 0;
-      list-style: none;
     }
 
     &__card {

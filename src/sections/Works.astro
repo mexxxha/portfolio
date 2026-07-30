@@ -17,44 +17,46 @@ const isScrollSwap = items.length > 1;
     <div class:list={['works__track', { 'is-single': !isScrollSwap }]}>
       <div class="works__sticky">
         <SectionTitle content={sectionTitles.works} />
-        <article class="works__card">
-          {
-            items.map((entry, index) => (
-              <a class:list={['works__panel', { 'is-active': index === 0 }]} href={`/works/${entry.id}`} data-works-panel data-index={index} aria-label={`${entry.data.title}の詳細`}>
-                <div class="works__media">
-                  <Image class="works__image" src={entry.data.thumbnail} alt={entry.data.title} />
-                </div>
-
-                <div class="works__body">
-                  <p class="works__date">{entry.data.date}</p>
-                  <h3 class="works__title">{entry.data.title}</h3>
-                  <p class="works__description">{entry.data.description}</p>
-
-                  <ul class="works__tech">
-                    {entry.data.tech.map((tech) => (
-                      <li class="works__tech_item">{tech}</li>
-                    ))}
-                  </ul>
-                </div>
-              </a>
-            ))
-          }
-
-          {
-            isScrollSwap && (
-              <p class="works__pager" data-works-pager>
-                <span data-works-current>1</span> / {items.length}
-              </p>
-            )
-          }
-        </article>
         {
-          hasMore && (
-            <p class="works__more">
-              <a class="works__more_link" href="/works">
-                もっと見る
-              </a>
-            </p>
+          items.length === 0 ? (
+            <p class="works__empty">{sectionTitles.works.empty}</p>
+          ) : (
+            <>
+              <article class="works__card">
+                {items.map((entry, index) => (
+                  <a class:list={['works__panel', { 'is-active': index === 0 }]} href={`/works/${entry.id}`} data-works-panel data-index={index} aria-label={`${entry.data.title}の詳細`}>
+                    <div class="works__media">
+                      <Image class="works__image" src={entry.data.thumbnail} alt={entry.data.title} />
+                    </div>
+
+                    <div class="works__body">
+                      <p class="works__date">{entry.data.date}</p>
+                      <h3 class="works__title">{entry.data.title}</h3>
+                      <p class="works__description">{entry.data.description}</p>
+
+                      <ul class="works__tech">
+                        {entry.data.tech.map((tech) => (
+                          <li class="works__tech_item">{tech}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </a>
+                ))}
+
+                {isScrollSwap && (
+                  <p class="works__pager" data-works-pager>
+                    <span data-works-current>1</span> / {items.length}
+                  </p>
+                )}
+              </article>
+              {hasMore && (
+                <p class="works__more">
+                  <a class="works__more_link" href="/works">
+                    もっと見る
+                  </a>
+                </p>
+              )}
+            </>
           )
         }
       </div>
@@ -100,6 +102,14 @@ const isScrollSwap = items.length > 1;
       position: sticky;
       top: 5rem;
       z-index: $z-base;
+    }
+
+    &__empty {
+      margin: 32px 0 0;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      opacity: 0.7;
+      text-align: center;
     }
 
     &__card {

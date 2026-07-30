@@ -13,50 +13,47 @@ const hasMore = posts.length > 2;
 <section class="blog" id="blog">
   <div class="blog__inner">
     <SectionTitle content={sectionTitles.blog} />
-
-    <ul class="blog__list">
-      {
-        items.map((entry) => (
-          <li class="blog__item">
-            <a class="blog__card" href={`/blog/${entry.id}`}>
-              {
-                entry.data.thumbnail && (
-                  <div class="blog__media">
-                    <Image
-                      class="blog__image"
-                      src={entry.data.thumbnail}
-                      alt={entry.data.title}
-                    />
-                  </div>
-                )
-              }
-
-              <div class="blog__body">
-                <p class="blog__date">{entry.data.date}</p>
-                <h3 class="blog__title">{entry.data.title}</h3>
-                <p class="blog__description">{entry.data.description}</p>
-
-                {
-                  entry.data.tags && (
-                    <ul class="blog__tags">
-                      {entry.data.tags.map((tag) => (
-                        <li class="blog__tag_item">{tag}</li>
-                      ))}
-                    </ul>
-                  )
-                }
-              </div>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-
     {
-      hasMore && (
-        <p class="blog__more">
-          <a class="blog__more_link" href="/blog">もっと見る</a>
-        </p>
+      items.length === 0 ? (
+        <p class="blog__empty">{sectionTitles.blog.empty}</p>
+      ) : (
+        <>
+          <ul class="blog__list">
+            {items.map((entry) => (
+              <li class="blog__item">
+                <a class="blog__card" href={`/blog/${entry.id}`}>
+                  {entry.data.thumbnail && (
+                    <div class="blog__media">
+                      <Image class="blog__image" src={entry.data.thumbnail} alt={entry.data.title} />
+                    </div>
+                  )}
+
+                  <div class="blog__body">
+                    <p class="blog__date">{entry.data.date}</p>
+                    <h3 class="blog__title">{entry.data.title}</h3>
+                    <p class="blog__description">{entry.data.description}</p>
+
+                    {entry.data.tags && (
+                      <ul class="blog__tags">
+                        {entry.data.tags.map((tag) => (
+                          <li class="blog__tag_item">{tag}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          {hasMore && (
+            <p class="blog__more">
+              <a class="blog__more_link" href="/blog">
+                もっと見る
+              </a>
+            </p>
+          )}
+        </>
       )
     }
   </div>
@@ -70,6 +67,14 @@ const hasMore = posts.length > 2;
     &__inner {
       max-width: 1100px;
       margin: 0 auto;
+    }
+
+    &__empty {
+      margin: 32px 0 0;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      opacity: 0.7;
+      text-align: center;
     }
 
     &__list {

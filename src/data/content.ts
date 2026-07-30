@@ -47,11 +47,13 @@ export const content = {
     works: {
       title: 'WORKS',
       subtitle: 'works',
+      empty: '制作実績はまだありません。',
     },
 
     blog: {
       title: 'BLOG',
       subtitle: 'blog',
+      empty: '記事はまだありません。',
     },
 
     contact: {
@@ -100,5 +102,18 @@ export const content = {
     },
   },
 
-  contact: {},
+  contact: {
+    lead: 'ご依頼・ご相談はお気軽にご連絡ください。',
+    email: {
+      label: 'Email',
+      value: 'hello@example.com',
+      href: 'mailto:hello@example.com',
+    },
+    form: {
+      nameLabel: 'お名前',
+      emailLabel: 'メールアドレス',
+      messageLabel: 'お問い合わせ内容',
+      submitLabel: '送信する',
+    },
+  },
 } as const;

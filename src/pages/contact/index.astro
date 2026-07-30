@@ -1,0 +1,204 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import { Icon } from 'astro-icon/components';
+import { content } from '../../data/content';
+
+const { sectionTitles, site, contact, socials } = content;
+const sent = Astro.url.searchParams.get('sent') === '1';
+const error = Astro.url.searchParams.get('error');
+---
+
+<BaseLayout
+  site={{
+    ...site,
+    title: `Contact | ${site.title}`,
+    description: 'お問い合わせ',
+  }}
+>
+  <section class="contact-page">
+    <div class="contact-page__inner">
+      <SectionTitle content={sectionTitles.contact} />
+      <p class="contact-page__lead">{contact.lead}</p>
+
+      <!-- SNS（任意） -->
+
+      {sent && <p class="contact-page__status is-success">送信が完了しました。ありがとうございました。</p>}
+      {error && <p class="contact-page__status is-error">{error === 'validation' ? '入力内容を確認してください。' : error === 'config' ? '送信設定に問題があります。' : '送信に失敗しました。時間をおいて再度お試しください。'}</p>}
+
+      <form class="contact-page__form" action="/api/contact" method="POST">
+        <label class="contact-page__field">
+          <span class="contact-page__label">{contact.form.nameLabel}</span>
+          <input class="contact-page__input" type="text" name="name" required autocomplete="name" />
+        </label>
+
+        <label class="contact-page__field">
+          <span class="contact-page__label">{contact.form.emailLabel}</span>
+          <input class="contact-page__input" type="email" name="email" required autocomplete="email" />
+        </label>
+
+        <label class="contact-page__field">
+          <span class="contact-page__label">{contact.form.messageLabel}</span>
+          <textarea class="contact-page__textarea" name="message" rows="6" required></textarea>
+        </label>
+
+
+        <input class="contact-page__gotcha" type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+
+        <button class="contact-page__submit" type="submit">{contact.form.submitLabel}</button>
+      </form>
+
+      <p class="contact-page__back">
+        <a class="contact-page__back_link" href="/">トップに戻る</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style lang="scss">
+  @use '../../styles/variables' as *;
+  @use '../../styles/mixins' as *;
+
+  .contact-page {
+    padding-top: 6rem;
+
+    &__inner {
+      max-width: 640px; // フォームは狭めの方が読みやすい
+      margin: 0 auto;
+    }
+
+    &__lead {
+      margin: 32px 0 0;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      opacity: 0.85;
+    }
+
+    &__status {
+      margin: 24px 0 0;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+
+      &.is-success {
+        opacity: 0.9;
+      }
+
+      &.is-error {
+        color: #e8a0a0;
+      }
+    }
+
+    &__gotcha {
+      position: absolute;
+      left: -9999px;
+      opacity: 0;
+      height: 0;
+      width: 0;
+      pointer-events: none;
+    }
+
+    &__form {
+      display: grid;
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    &__field {
+      display: grid;
+      gap: 8px;
+    }
+
+    &__label {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      opacity: 0.7;
+    }
+
+    &__input,
+    &__textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 0.5px solid $c-border;
+      border-radius: 4px;
+      background: transparent;
+      color: $c-text;
+      font: inherit;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      outline: none;
+      transition: border-color 0.3s ease;
+
+      &::placeholder {
+        color: $c-text;
+        opacity: 0.4;
+      }
+
+      &:focus {
+        border-color: $c-text;
+      }
+    }
+
+    &__textarea {
+      resize: vertical;
+      min-height: 140px;
+      line-height: 1.7;
+    }
+
+    &__submit {
+      justify-self: start;
+      margin-top: 8px;
+      padding: 10px 22px;
+      border: 0.5px solid $c-border;
+      border-radius: 999px;
+      background: transparent;
+      color: $c-text;
+      font: inherit;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      transition:
+        color 0.3s ease,
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+
+      &:hover {
+        color: $c-text-a;
+        background-color: $c-bg-a;
+        border-color: $c-bg-a;
+      }
+    }
+
+    &__back {
+      display: flex;
+      justify-content: center;
+      margin: 48px 0 0;
+    }
+
+    &__back_link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border: 0.5px solid $c-border;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: $c-text;
+      text-decoration: none;
+      transition:
+        color 0.3s ease,
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+
+      &::before {
+        content: '←';
+      }
+
+      &:hover {
+        color: $c-text-a;
+        background-color: $c-bg-a;
+        border-color: $c-bg-a;
+      }
+    }
+  }
+</style>
