@@ -1,11 +1,14 @@
-let observer: IntersectionObserver | null = null;
 let activeIndex = -1;
+let onScroll: (() => void) | null = null;
 let onLoad: (() => void) | null = null;
 
 // --- Lifecycle ---
 const cleanup = () => {
-  observer?.disconnect();
-  observer = null;
+  if (onScroll) {
+    window.removeEventListener('scroll', onScroll);
+    window.removeEventListener('resize', onScroll);
+    onScroll = null;
+  }
   if (onLoad) {
     window.removeEventListener('load', onLoad);
     onLoad = null;
@@ -48,27 +51,6 @@ const getIndexFromScroll = (steps: NodeListOf<HTMLElement>) => {
   return nearestIndex;
 };
 
-// --- Observe ---
-const attachObserver = (steps: NodeListOf<HTMLElement>, setActive: (index: number) => void) => {
-  observer = new IntersectionObserver(
-    (entries) => {
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-      if (!visible) return;
-      setActive(Number((visible.target as HTMLElement).dataset.index ?? 0));
-    },
-    {
-      root: null,
-      threshold: [0.4, 0.6, 0.8],
-      rootMargin: '-20% 0px -20% 0px',
-    },
-  );
-
-  steps.forEach((step) => observer?.observe(step));
-};
-
 // --- Boot ---
 const init = () => {
   cleanup();
@@ -79,21 +61,16 @@ const init = () => {
 
   if (steps.length <= 1 || panels.length <= 1) return;
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const setActive = createSetActive(panels, current);
   const syncFromScroll = () => setActive(getIndexFromScroll(steps));
 
-  if (prefersReducedMotion) {
-    syncFromScroll();
-    return;
-  }
-
-  attachObserver(steps, setActive);
+  onScroll = syncFromScroll;
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
 
   syncFromScroll();
   requestAnimationFrame(syncFromScroll);
 
-  // 初回ロード時だけ。ClientRouter 遷移後は page-load 側で足りる
   if (document.readyState !== 'complete') {
     onLoad = syncFromScroll;
     window.addEventListener('load', onLoad, { once: true });
