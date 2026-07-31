@@ -1,25 +1,32 @@
-// src/scripts/shuffleText.ts
 import ShuffleText from 'shuffle-text';
 
-const targets =
-  document.querySelectorAll<HTMLElement>('[data-shuffle-text]');
+let observer: IntersectionObserver | null = null;
 
-const observer = new IntersectionObserver(
-  (entries, currentObserver) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
+const init = () => {
+  observer?.disconnect();
 
-      const element = entry.target as HTMLElement;
-      const shuffleText = new ShuffleText(element);
+  observer = new IntersectionObserver(
+    (entries, currentObserver) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
 
-      shuffleText.sourceRandomCharacter = '░▒▓█';
-      shuffleText.duration = 900;
-      shuffleText.start();
+        const element = entry.target as HTMLElement;
+        const shuffleText = new ShuffleText(element);
 
-      currentObserver.unobserve(element);
-    });
-  },
-  { threshold: 0.3 },
-);
+        shuffleText.sourceRandomCharacter = '░▒▓█';
+        shuffleText.duration = 900;
+        shuffleText.start();
 
-targets.forEach((target) => observer.observe(target));
+        currentObserver.unobserve(element);
+      });
+    },
+    { threshold: 0.3 },
+  );
+
+  document
+    .querySelectorAll<HTMLElement>('[data-shuffle-text]')
+    .forEach((target) => observer?.observe(target));
+};
+
+init();
+document.addEventListener('astro:page-load', init);
