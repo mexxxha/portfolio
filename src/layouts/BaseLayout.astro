@@ -16,7 +16,7 @@ type Props = {
 const { site } = Astro.props;
 ---
 
-<html lang={site.lang}>
+<html lang={site.lang} transition:animate="none">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -37,9 +37,9 @@ const { site } = Astro.props;
 		<Loading />
     <Header />
 		<ScrollIndicator />
-    <main>
-      <slot />
-    </main>
+    <main transition:name="content" transition:animate="fade">
+			<slot />
+		</main>
     <Footer />
 		<script>
 			import '../scripts/lenis';
