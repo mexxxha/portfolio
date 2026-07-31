@@ -9,7 +9,9 @@ const { content } = Astro.props;
 ---
 
 <div class="section-title">
-  <p class="sub_title" data-shuffle-text>{content.subtitle}</p>
+  <p class="sub_title" data-shuffle-text data-shuffle-original={content.subtitle}>
+    {content.subtitle}
+  </p>
   <h2 class="title">{content.title}</h2>
 </div>
 
