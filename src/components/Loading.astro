@@ -26,11 +26,28 @@ const LogoIcon = content.logo.src;
     place-items: center;
     background-color: $c-bg;
     color: $c-text;
-    transition: opacity 0.6s ease, visibility 0.6s ease;
+    transition:
+      opacity 0.6s ease,
+      visibility 0.6s ease;
 
     &.is-hidden {
       opacity: 0;
       visibility: hidden;
+      pointer-events: none;
+    }
+
+    &.is-bg-out {
+      background-color: transparent;
+      transition: background-color 0.35s ease;
+
+      .loading__brand,
+      .loading__label,
+      .loading__bar {
+        opacity: 0;
+        transition: opacity 0.35s ease;
+      }
+
+      // ロゴ以外のクリック阻害を外す
       pointer-events: none;
     }
 
