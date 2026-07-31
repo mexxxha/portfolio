@@ -3,13 +3,15 @@ import ShuffleText from 'shuffle-text';
 let observer: IntersectionObserver | null = null;
 let waitingForLoad = false;
 
+// --- Gate ---
 const isPageReady = () => document.documentElement.classList.contains('is-loaded');
+const isInLoading = (element: HTMLElement) => element.closest('.loading') !== null;
+const canPlay = (element: HTMLElement) => isInLoading(element) || isPageReady();
 
+// --- Play ---
 const play = (element: HTMLElement) => {
   if (element.dataset.shufflePlaying === 'true') return;
-
-  const inLoading = element.closest('.loading') !== null;
-  if (!inLoading && !isPageReady()) return;
+  if (!canPlay(element)) return;
 
   const original = element.dataset.shuffleOriginal ?? element.textContent ?? '';
   element.textContent = original;
@@ -27,7 +29,8 @@ const play = (element: HTMLElement) => {
   }, shuffleText.duration + 50);
 };
 
-const init = () => {
+// --- Observe ---
+const observeTargets = () => {
   observer?.disconnect();
 
   observer = new IntersectionObserver(
@@ -36,8 +39,8 @@ const init = () => {
         if (!entry.isIntersecting) return;
         const element = entry.target as HTMLElement;
 
-        const inLoading = element.closest('.loading') !== null;
-        if (!inLoading && !isPageReady()) return;
+        // ページ未準備なら unobserve しない（ロード後に再判定）
+        if (!canPlay(element)) return;
 
         play(element);
         currentObserver.unobserve(element);
@@ -47,31 +50,37 @@ const init = () => {
   );
 
   document.querySelectorAll<HTMLElement>('[data-shuffle-text]').forEach((target) => {
-    if (target.closest('.loading')) return;
+    if (isInLoading(target)) return;
     target.dataset.shufflePlaying = 'false';
     if (!target.dataset.shuffleOriginal) {
       target.dataset.shuffleOriginal = target.textContent ?? '';
     }
     observer?.observe(target);
   });
+};
 
-  if (!isPageReady() && !waitingForLoad) {
-    waitingForLoad = true;
+// --- WaitLoaded ---
+const waitUntilLoaded = (onReady: () => void) => {
+  if (isPageReady() || waitingForLoad) return;
 
-    const onReady = () => {
-      waitingForLoad = false;
-      init();
-    };
+  waitingForLoad = true;
 
-    const check = () => {
-      if (isPageReady()) {
-        onReady();
-        return;
-      }
+  const check = () => {
+    if (!isPageReady()) {
       requestAnimationFrame(check);
-    };
-    check();
-  }
+      return;
+    }
+    waitingForLoad = false;
+    onReady();
+  };
+
+  check();
+};
+
+// --- Boot ---
+const init = () => {
+  observeTargets();
+  waitUntilLoaded(init);
 };
 
 init();
