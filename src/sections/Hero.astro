@@ -5,6 +5,7 @@ import SectionTitle from '../components/SectionTitle.astro';
 
 
 const { logo, hero, sectionTitles } = content;
+const LogoIcon = logo.src;
 ---
 
 <section class="hero">
@@ -17,7 +18,7 @@ const { logo, hero, sectionTitles } = content;
   />
   <h1 class="hero__logo">
     <a href="/" class="hero__logo_link" aria-label="ホームへ戻る">
-      <Image class="hero__logo_img" src={logo.src} alt={logo.alt} />
+      <LogoIcon class="hero__logo_img" aria-hidden="true" focusable="false" />
     </a>
   </h1>
   <div class="hero__inner">
