@@ -36,16 +36,14 @@ const init = () => {
     { threshold: 0.3 },
   );
 
-  document
-    .querySelectorAll<HTMLElement>('[data-shuffle-text]')
-    .forEach((target) => {
-      // ページ遷移のたびに再生したいなら playing をリセット
-      target.dataset.shufflePlaying = 'false';
-      if (!target.dataset.shuffleOriginal) {
-        target.dataset.shuffleOriginal = target.textContent ?? '';
-      }
-      observer?.observe(target);
-    });
+  document.querySelectorAll<HTMLElement>('[data-shuffle-text]').forEach((target) => {
+    // ページ遷移のたびに再生したいなら playing をリセット
+    target.dataset.shufflePlaying = 'false';
+    if (!target.dataset.shuffleOriginal) {
+      target.dataset.shuffleOriginal = target.textContent ?? '';
+    }
+    observer?.observe(target);
+  });
 };
 
 init();

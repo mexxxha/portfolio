@@ -5,9 +5,7 @@ const current = document.querySelector<HTMLElement>('[data-works-current]');
 if (steps.length <= 1 || panels.length <= 1) {
   // no-op
 } else {
-  const prefersReducedMotion = window.matchMedia(
-    '(prefers-reduced-motion: reduce)',
-  ).matches;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   let activeIndex = -1; // 初回は必ず setActive が走るようにする
 
@@ -53,15 +51,11 @@ if (steps.length <= 1 || panels.length <= 1) {
   } else {
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
         if (!visible) return;
 
-        const index = Number(
-          (visible.target as HTMLElement).dataset.index ?? 0,
-        );
+        const index = Number((visible.target as HTMLElement).dataset.index ?? 0);
         setActive(index);
       },
       {
