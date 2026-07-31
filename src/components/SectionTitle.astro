@@ -8,28 +8,30 @@ interface Props {
 const { content } = Astro.props;
 ---
 
-<div class="section-title">
-  <p class="sub_title" data-shuffle-text data-shuffle-original={content.subtitle}>
+<div class="section__title">
+  <p class="section__title_sub" data-shuffle-text data-shuffle-original={content.subtitle}>
     {content.subtitle}
   </p>
-  <h2 class="title">{content.title}</h2>
+  <h2 class="section__title_title">{content.title}</h2>
 </div>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
 
-  .title {
-    font-family: 'Libre Barcode 39', cursive;
-    font-size: 2.5rem;
-    line-height: 1.2;
-    letter-spacing: 0.04em;
-  }
+  .section__title {
+    &_title {
+      font-family: 'Libre Barcode 39', cursive;
+      font-size: $fs-display;
+      line-height: 1.2;
+      letter-spacing: 0.04em;
+    }
 
-  .sub_title {
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    opacity: 0.7;
+    &_sub {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      opacity: 0.7;
+    }
   }
 </style>
 

@@ -14,20 +14,20 @@ const { site, aboutPage } = content;
     description: 'プロフィール・経歴',
   }}
 >
-  <div class="about-page">
+  <div class="about">
     <About detail />
     <Skills />
 
-    <section class="about-page__history">
-      <h2 class="about-page__history_title">History</h2>
-      <ol class="about-page__history_list">
+    <section class="about__history">
+      <h2 class="about__history_title">History</h2>
+      <ol class="about__history_list">
         {
           aboutPage.history.map((item) => (
-            <li class="about-page__history_item">
-              <p class="about-page__history_year">{item.year}</p>
-              <div class="about-page__history_body">
-                <h3 class="about-page__history_name">{item.title}</h3>
-                <p class="about-page__history_desc">{item.description}</p>
+            <li class="about__history_item">
+              <p class="about__history_year">{item.year}</p>
+              <div class="about__history_body">
+                <h3 class="about__history_name">{item.title}</h3>
+                <p class="about__history_desc">{item.description}</p>
               </div>
             </li>
           ))
@@ -35,8 +35,8 @@ const { site, aboutPage } = content;
       </ol>
     </section>
 
-    <p class="about-page__back">
-      <a class="about-page__backLink" href="/">トップに戻る</a>
+    <p class="about__back">
+      <a class="about__back_link" href="/">トップに戻る</a>
     </p>
   </div>
 </BaseLayout>
@@ -45,24 +45,17 @@ const { site, aboutPage } = content;
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
 
-  .about-page {
+  .about {
     max-width: 1100px;
     margin: 0 auto;
     padding: 6rem 24px 0;
-
-    &__lead {
-      font-size: 0.85rem;
-      line-height: 2;
-      letter-spacing: 0.06em;
-      opacity: 0.8;
-    }
 
     &__history {
       margin-top: 100px;
 
       &_title {
         font-size: 0.8rem;
-        letter-spacing: 0.16em;
+        letter-spacing: 0.1em;
         opacity: 0.6;
       }
 
@@ -81,7 +74,7 @@ const { site, aboutPage } = content;
       &_year {
         flex-shrink: 0;
         width: 80px;
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         letter-spacing: 0.08em;
         opacity: 0.6;
       }
@@ -93,8 +86,7 @@ const { site, aboutPage } = content;
 
       &_desc {
         margin-top: 6px;
-        font-size: 0.75rem;
-        line-height: 1.8;
+        font-size: 0.7rem;
         opacity: 0.7;
       }
     }
@@ -103,33 +95,33 @@ const { site, aboutPage } = content;
       display: flex;
       justify-content: center;
       margin: 80px 0 0;
-    }
 
-    &__backLink {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 22px;
-      border: 0.5px solid $c-border;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      color: $c-text;
-      transition:
-        color 0.3s ease,
-        background-color 0.3s ease,
-        border-color 0.3s ease;
+      &_link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 22px;
+        border: 0.5px solid $c-border;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        color: $c-text;
+        transition:
+          color 0.4s ease,
+          background-color 0.4s ease,
+          border-color 0.4s ease;
 
-      &:hover {
-        color: $c-text-a;
-        background-color: $c-bg-a;
-        border-color: $c-bg-a;
+        &:hover {
+          color: $c-text-a;
+          background-color: $c-bg-a;
+          border-color: $c-bg-a;
+        }
       }
     }
   }
 
   @include tab {
-    .about-page {
+    .about {
       &__history_item {
         flex-direction: column;
         gap: 8px;

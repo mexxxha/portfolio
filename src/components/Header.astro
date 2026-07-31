@@ -36,7 +36,7 @@ const isCurrent = (href: string) => {
       {
         nav.map((item) => (
           <li>
-            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+            <a class:list={['header__overlay_link', isCurrent(item.href) && 'is-active']} href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
               {item.label}
             </a>
           </li>
@@ -88,10 +88,10 @@ const isCurrent = (href: string) => {
       &_list {
         position: relative;
         display: flex;
-        border: 0.5px solid $c-text;
-        border-radius: 5px;
         gap: 8px;
         padding: 6px 16px;
+        border: 0.5px solid $c-text;
+        border-radius: 5px;
         line-height: 1;
         z-index: $z-base - 1;
       }
@@ -102,7 +102,7 @@ const isCurrent = (href: string) => {
         padding: 6px 12px;
         letter-spacing: 0.1em;
         z-index: $z-base;
-        transition: color 0.35s ease;
+        transition: color 0.4s ease;
 
         &.is-active {
           color: $c-text-a;
@@ -118,18 +118,18 @@ const isCurrent = (href: string) => {
         background-color: $c-bg-a;
         z-index: $z-base - 1;
         transition:
-          transform 0.35s ease,
-          width 0.35s ease,
-          height 0.35s ease;
+          transform 0.4s ease,
+          width 0.4s ease,
+          height 0.4s ease;
       }
     }
 
     &__hamburger {
       display: none;
       position: relative;
-      z-index: $z-base + 4;
       width: 70px;
       height: 44px;
+      z-index: $z-base + 4;
       cursor: pointer;
 
       &_line {
@@ -139,8 +139,8 @@ const isCurrent = (href: string) => {
         height: 1px;
         background-color: $c-text;
         transition:
-          transform 0.3s ease,
-          opacity 0.3s ease;
+          transform 0.4s ease,
+          opacity 0.4s ease;
 
         &:nth-child(1) {
           top: 17px;
@@ -154,7 +154,6 @@ const isCurrent = (href: string) => {
     &__overlay {
       position: fixed;
       inset: 0;
-      z-index: $z-base;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -162,9 +161,10 @@ const isCurrent = (href: string) => {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
+      z-index: $z-base;
       transition:
-        opacity 0.35s ease,
-        visibility 0.35s ease;
+        opacity 0.4s ease,
+        visibility 0.4s ease;
 
       &_list {
         display: flex;
@@ -174,20 +174,18 @@ const isCurrent = (href: string) => {
       }
 
       &_link {
-        font-size: 1.1rem;
-        letter-spacing: 0.16em;
+        font-size: 1rem;
+        letter-spacing: 0.1em;
         color: $c-text;
 
         &.is-active {
-          color: $c-bg-a;
+          color: $c-active;
         }
       }
     }
 
     &.is-menu-open {
-
       .header__hamburger_line {
-
         &:nth-child(1) {
           top: 21px;
           transform: rotate(20deg);
@@ -212,9 +210,6 @@ const isCurrent = (href: string) => {
       align-items: flex-end;
       gap: 8px;
 
-      &_item {
-      }
-
       &_link {
         display: flex;
         justify-content: center;
@@ -223,7 +218,6 @@ const isCurrent = (href: string) => {
         max-width: 30px;
         min-width: 30px;
         height: 30px;
-        padding: 0;
         gap: 0;
         border: 0.5px solid $c-text;
         border-radius: 15px;
@@ -231,10 +225,10 @@ const isCurrent = (href: string) => {
         letter-spacing: 0.06em;
         overflow: hidden;
         transition:
-          width 0.5s ease,
-          max-width 0.5s ease,
-          padding 0.5s ease,
-          gap 0.5s ease;
+          width 0.4s ease,
+          max-width 0.4s ease,
+          padding 0.4s ease,
+          gap 0.4s ease;
 
         &:hover {
           justify-content: flex-start;
@@ -257,8 +251,8 @@ const isCurrent = (href: string) => {
         overflow: hidden;
         white-space: nowrap;
         transition:
-          max-width 0.5s ease,
-          opacity 0.5s ease;
+          max-width 0.4s ease,
+          opacity 0.4s ease;
       }
       &_link:hover &_label {
         max-width: 5rem;
@@ -268,22 +262,20 @@ const isCurrent = (href: string) => {
   }
 
   @include tab {
+    .header {
+      &__nav {
+        display: none;
+      }
 
-  .header {
+      &__hamburger {
+        display: block;
+      }
 
-    &__nav {
-      display: none;
-    }
-
-    &__hamburger {
-      display: block;
-    }
-    
-    &__sns {
-      display: none; // オーバーレイに移すなら残してもよい
+      &__sns {
+        display: none; // オーバーレイに移すなら残してもよい
+      }
     }
   }
-}
 </style>
 
 <script>

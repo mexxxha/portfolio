@@ -38,7 +38,7 @@ const posts = (await getCollection('blog')).sort((a, b) =>
                   <div class="blog__body">
                     <p class="blog__date">{entry.data.date}</p>
                     <h2 class="blog__title">{entry.data.title}</h2>
-                    <p class="blog__description">{entry.data.description}</p>
+                    <p class="blog__desc">{entry.data.description}</p>
 
                     {entry.data.tags && (
                       <ul class="blog__tags">
@@ -75,11 +75,11 @@ const posts = (await getCollection('blog')).sort((a, b) =>
     }
 
     &__empty {
+      text-align: center;
       margin: 32px 0 0;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       letter-spacing: 0.06em;
       opacity: 0.7;
-      text-align: center;
     }
 
     &__list {
@@ -87,21 +87,18 @@ const posts = (await getCollection('blog')).sort((a, b) =>
       grid-template-columns: repeat(2, 1fr);
       gap: 24px;
       margin: 32px 0 0;
-      padding: 0;
     }
 
     &__card {
       display: grid;
-      gap: 16px;
       height: 100%;
+      gap: 16px;
       padding: 16px;
       border: 0.5px solid $c-border;
       border-radius: 8px;
-      color: inherit;
-      text-decoration: none;
       transition:
-        border-color 0.3s ease,
-        transform 0.3s ease;
+        border-color 0.4s ease,
+        transform 0.4s ease;
 
       &:hover {
         border-color: $c-text;
@@ -111,15 +108,13 @@ const posts = (await getCollection('blog')).sort((a, b) =>
 
     &__media {
       aspect-ratio: 16 / 10;
-      overflow: hidden;
       border-radius: 4px;
+      overflow: hidden;
     }
 
     &__image {
-      width: 100%;
       height: 100%;
-      object-fit: cover;
-      transition: transform 0.45s ease;
+      transition: transform 0.4s ease;
 
       .blog__card:hover & {
         transform: scale(1.03);
@@ -133,23 +128,19 @@ const posts = (await getCollection('blog')).sort((a, b) =>
     }
 
     &__date {
-      margin: 0;
       font-size: 0.7rem;
       letter-spacing: 0.08em;
       opacity: 0.7;
     }
 
     &__title {
-      margin: 0;
-      font-size: 1.1rem;
+      font-size: 1rem;
       line-height: 1.3;
     }
 
-    &__description {
-      margin: 0;
-      font-size: 0.75rem;
-      line-height: 1.7;
-      opacity: 0.85;
+    &__desc {
+      font-size: 0.7rem;
+      opacity: 0.8;
     }
 
     &__tags {
@@ -157,8 +148,6 @@ const posts = (await getCollection('blog')).sort((a, b) =>
       flex-wrap: wrap;
       gap: 8px;
       margin: 4px 0 0;
-      padding: 0;
-      list-style: none;
     }
 
     &__tag_item {
@@ -183,13 +172,12 @@ const posts = (await getCollection('blog')).sort((a, b) =>
       border: 0.5px solid $c-border;
       border-radius: 999px;
       font-size: 0.7rem;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.2em;
       color: $c-text;
-      text-decoration: none;
       transition:
-        color 0.3s ease,
-        background-color 0.3s ease,
-        border-color 0.3s ease;
+        color 0.4s ease,
+        background-color 0.4s ease,
+        border-color 0.4s ease;
 
       &:hover {
         color: $c-text-a;

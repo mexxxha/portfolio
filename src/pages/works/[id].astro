@@ -38,14 +38,14 @@ const { title, description, date, type, tech, thumbnail, liveUrl } = entry.data;
       </p>
 
       <h1 class="work__title">{title}</h1>
-      <p class="work__lead">{description}</p>
+      <p class="work__desc">{description}</p>
 
       <div class="work__media">
         <Image class="work__image" src={thumbnail} alt={title} />
       </div>
 
       <ul class="work__tech">
-        {tech.map((item) => <li class="work__item">{item}</li>)}
+        {tech.map((item) => <li class="work__tech_item">{item}</li>)}
       </ul>
 
       {
@@ -94,13 +94,13 @@ const { title, description, date, type, tech, thumbnail, liveUrl } = entry.data;
     &__title {
       margin: 0 0 12px;
       font-size: clamp(1.6rem, 3vw, 2.2rem);
-      line-height: 1.25;
+      line-height: 1;
     }
 
-    &__lead {
+    &__desc {
       margin: 0 0 28px;
       font-size: 0.9rem;
-      opacity: 0.85;
+      opacity: 0.8;
     }
 
     &__media {
@@ -121,15 +121,14 @@ const { title, description, date, type, tech, thumbnail, liveUrl } = entry.data;
       flex-wrap: wrap;
       gap: 8px;
       margin: 20px 0 0;
-      padding: 0;
-    }
 
-    &__item {
-      border: 0.5px solid $c-border;
-      border-radius: 999px;
-      padding: 4px 10px;
-      font-size: 0.6rem;
-      letter-spacing: 0.06em;
+      &_item {
+        border: 0.5px solid $c-border;
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-size: 0.6rem;
+        letter-spacing: 0.06em;
+      }
     }
 
     &__external {
@@ -143,13 +142,12 @@ const { title, description, date, type, tech, thumbnail, liveUrl } = entry.data;
         border: 0.5px solid $c-border;
         border-radius: 999px;
         font-size: 0.7rem;
-        letter-spacing: 0.12em;
+        letter-spacing: 0.1em;
         color: $c-text;
-        text-decoration: none;
         transition:
-          color 0.3s ease,
-          background-color 0.3s ease,
-          border-color 0.3s ease;
+          color 0.4s ease,
+          background-color 0.4s ease,
+          border-color 0.4s ease;
 
         &::after {
           content: '↗';
@@ -168,7 +166,7 @@ const { title, description, date, type, tech, thumbnail, liveUrl } = entry.data;
       font-size: 0.9rem;
 
       :global(h2) {
-        margin: 2em 0 0.75em;
+        margin: 2em 0 0.7em;
         font-size: 1rem;
       }
 
@@ -177,21 +175,21 @@ const { title, description, date, type, tech, thumbnail, liveUrl } = entry.data;
       }
 
       :global(ul) {
-        margin: 0 0 1.25em;
-        padding-left: 1.25em;
+        margin: 0 0 1em;
+        padding-left: 1em;
         list-style: disc;
       }
 
       :global(li + li) {
-        margin-top: 0.35em;
+        margin-top: 0.3em;
       }
     }
 
     &__nav {
       display: flex;
+      justify-content: center;
       flex-wrap: wrap;
       gap: 12px;
-      justify-content: center;
       margin-top: 56px;
 
       &_link {
@@ -201,13 +199,12 @@ const { title, description, date, type, tech, thumbnail, liveUrl } = entry.data;
         border: 0.5px solid $c-border;
         border-radius: 999px;
         font-size: 0.7rem;
-        letter-spacing: 0.12em;
+        letter-spacing: 0.2em;
         color: $c-text;
-        text-decoration: none;
         transition:
-          color 0.3s ease,
-          background-color 0.3s ease,
-          border-color 0.3s ease;
+          color 0.4s ease,
+          background-color 0.4s ease,
+          border-color 0.4s ease;
 
         &:hover {
           color: $c-text-a;

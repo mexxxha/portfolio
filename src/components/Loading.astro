@@ -21,14 +21,14 @@ const LogoIcon = content.logo.src;
   .loading {
     position: fixed;
     inset: 0;
-    z-index: 9999;
     display: grid;
     place-items: center;
     background-color: $c-bg;
     color: $c-text;
+    z-index: 9999;
     transition:
-      opacity 0.6s ease,
-      visibility 0.6s ease;
+      opacity 0.4s ease,
+      visibility 0.4s ease;
 
     &.is-hidden {
       opacity: 0;
@@ -37,14 +37,13 @@ const LogoIcon = content.logo.src;
     }
 
     &.is-bg-out {
-      background-color: transparent;
-      transition: background-color 0.35s ease;
+      transition: background-color 0.4s ease;
 
       .loading__brand,
       .loading__label,
       .loading__bar {
         opacity: 0;
-        transition: opacity 0.35s ease;
+        transition: opacity 0.4s ease;
       }
 
       // ロゴ以外のクリック阻害を外す
@@ -71,7 +70,7 @@ const LogoIcon = content.logo.src;
 
     &__label {
       font-size: 0.5rem;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       opacity: 0.7;
     }
@@ -81,14 +80,14 @@ const LogoIcon = content.logo.src;
       height: 1px;
       background-color: $c-border;
       overflow: hidden;
-    }
 
-    &__bar_fill {
-      display: block;
-      width: 40%;
-      height: 100%;
-      background-color: $c-bg-a;
-      animation: loading-slide 1s ease-in-out infinite;
+      &_fill {
+        display: block;
+        width: 40%;
+        height: 100%;
+        background-color: $c-bg-a;
+        animation: loading-slide 4s ease-in-out infinite;
+      }
     }
   }
 
