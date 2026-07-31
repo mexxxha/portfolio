@@ -17,11 +17,7 @@ const isCurrent = (href: string) => {
       {
         nav.map((item) => (
           <li>
-            <a
-              class:list={['header__nav_link', isCurrent(item.href) && 'is-active']}
-              href={item.href}
-              aria-current={isCurrent(item.href) ? 'page' : undefined}
-            >
+            <a class:list={['header__nav_link', isCurrent(item.href) && 'is-active']} href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
               {item.label}
             </a>
           </li>
@@ -30,22 +26,24 @@ const isCurrent = (href: string) => {
     </ul>
   </nav>
   <!-- Tablet / SP : ハンバーガーボタン -->
-  <button class="header__hamburger" aria-label="メニューを開く" aria-expanded="false" type="button">
+  <button class="header__hamburger" aria-label="メニューを開く" aria-expanded="false" type="button" aria-controls="header-overlay">
     <span class="header__hamburger_line" aria-hidden="true"></span>
     <span class="header__hamburger_line" aria-hidden="true"></span>
   </button>
   <!-- Tablet/SP：全画面オーバーレイ -->
-  <!--<div class="header__overlay" aria-hidden="true">
-     <ul class="header__overlay_list">
+  <div class="header__overlay" id="header-overlay" aria-hidden="true">
+    <ul class="header__overlay_list">
       {
         nav.map((item) => (
           <li>
-            <a href={item.href}>{item.label}</a>
+            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+              {item.label}
+            </a>
           </li>
         ))
       }
     </ul>
-  </div> -->
+  </div>
   <ul class="header__sns">
     {
       socials.map((item) => (
@@ -127,7 +125,84 @@ const isCurrent = (href: string) => {
     }
 
     &__hamburger {
+      display: none;
+      position: relative;
+      z-index: $z-base + 4;
+      width: 70px;
+      height: 44px;
+      cursor: pointer;
+
       &_line {
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        height: 1px;
+        background-color: $c-text;
+        transition:
+          transform 0.3s ease,
+          opacity 0.3s ease;
+
+        &:nth-child(1) {
+          top: 17px;
+        }
+        &:nth-child(2) {
+          top: 25px;
+        }
+      }
+    }
+
+    &__overlay {
+      position: fixed;
+      inset: 0;
+      z-index: $z-base;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $c-bg;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease;
+
+      &_list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+      }
+
+      &_link {
+        font-size: 1.1rem;
+        letter-spacing: 0.16em;
+        color: $c-text;
+
+        &.is-active {
+          color: $c-bg-a;
+        }
+      }
+    }
+
+    &.is-menu-open {
+
+      .header__hamburger_line {
+
+        &:nth-child(1) {
+          top: 21px;
+          transform: rotate(20deg);
+        }
+
+        &:nth-child(2) {
+          top: 21px;
+          transform: rotate(-20deg);
+        }
+      }
+
+      .header__overlay {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
       }
     }
 
@@ -191,8 +266,27 @@ const isCurrent = (href: string) => {
       }
     }
   }
+
+  @include tab {
+
+  .header {
+
+    &__nav {
+      display: none;
+    }
+
+    &__hamburger {
+      display: block;
+    }
+    
+    &__sns {
+      display: none; // オーバーレイに移すなら残してもよい
+    }
+  }
+}
 </style>
 
 <script>
   import '../scripts/nav-indicator';
+  import '../scripts/hamburger';
 </script>

@@ -11,13 +11,15 @@
 </div>
 
 <style lang="scss">
+  @use '../styles/variables' as *;
+
   .scroll__ruler {
     --progress: 0;
 
     position: fixed;
     top: 50%;
     right: 24px;
-    z-index: 100;
+    z-index: $z-base + 1;
     width: 32px;
     height: 180px;
     transform: translateY(-50%);
