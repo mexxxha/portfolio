@@ -6,6 +6,10 @@ html {
   scroll-behavior: smooth;
 }
 
+html:not(.is-loaded) {
+  overflow: hidden;
+}
+
 html,
 body {
   scrollbar-width: none;

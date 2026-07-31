@@ -1,13 +1,84 @@
 ---
 ---
 
-<div class="loading">
-
+<div class="loading" role="status" aria-live="polite" aria-label="読み込み中">
+  <div class="loading__inner">
+    <p class="loading__brand" data-shuffle-text data-shuffle-original="MECHA">MECHA</p>
+    <p class="loading__label">Loading</p>
+    <div class="loading__bar" aria-hidden="true">
+      <span class="loading__bar_fill"></span>
+    </div>
+  </div>
 </div>
 
 <style lang="scss">
   @use '../styles/variables' as *;
-  @use '../styles/mixins' as *;
-  
-	
+
+  .loading {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    background-color: $c-bg;
+    color: $c-text;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+
+    &.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    &__inner {
+      display: grid;
+      justify-items: center;
+      gap: 16px;
+      width: min(240px, 70vw);
+    }
+
+    &__brand {
+      margin: 0;
+      font-family: 'Libre Barcode 39', cursive;
+      font-size: 2.4rem;
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+
+    &__label {
+      margin: 0;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    &__bar {
+      width: 100%;
+      height: 1px;
+      background-color: $c-border;
+      overflow: hidden;
+    }
+
+    &__bar_fill {
+      display: block;
+      width: 40%;
+      height: 100%;
+      background-color: $c-bg-a;
+      animation: loading-slide 1s ease-in-out infinite;
+    }
+  }
+
+  @keyframes loading-slide {
+    0% {
+      transform: translateX(-120%);
+    }
+    100% {
+      transform: translateX(320%);
+    }
+  }
 </style>
+
+<script>
+  import '../scripts/loading';
+</script>
