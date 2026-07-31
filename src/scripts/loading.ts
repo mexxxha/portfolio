@@ -50,3 +50,4 @@ document.addEventListener('astro:after-swap', () => {
 document.addEventListener('astro:page-load', () => {
   if (hasLoaded()) suppress();
 });
+

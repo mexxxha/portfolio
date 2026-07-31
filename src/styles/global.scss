@@ -10,6 +10,10 @@ html:not(.is-loaded) {
   overflow: hidden;
 }
 
+.hero__logo_img.is-waiting {
+  opacity: 0;
+}
+
 html,
 body {
   scrollbar-width: none;
