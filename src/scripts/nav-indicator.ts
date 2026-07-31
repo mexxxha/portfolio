@@ -33,5 +33,5 @@ const update = (animation: boolean) => {
 
 update(false);
 document.fonts.ready.then(() => update(false));
-window.addEventListener('resize', () => update(false));
+// window.addEventListener('resize', () => update(false));
 document.addEventListener('astro:page-load', () => update(true));
