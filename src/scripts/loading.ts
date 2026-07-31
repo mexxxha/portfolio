@@ -1,39 +1,52 @@
 const MIN_MS = 2000;
+const FLAG = 'site-loaded';
 
-const hide = () => {
-  const el = document.querySelector<HTMLElement>('.loading');
-  if (!el || el.classList.contains('is-hidden')) return;
+const hasLoaded = () => sessionStorage.getItem(FLAG) === '1';
 
-  el.classList.add('is-hidden');
+const markLoaded = () => {
+  sessionStorage.setItem(FLAG, '1');
   document.documentElement.classList.add('is-loaded');
+};
 
+const suppress = () => {
+  markLoaded();
+  document.querySelectorAll<HTMLElement>('.loading').forEach((el) => {
+    el.style.display = 'none';
+    el.setAttribute('hidden', '');
+  });
+};
+
+const hide = (el: HTMLElement) => {
+  el.classList.add('is-hidden');
+  markLoaded();
   window.setTimeout(() => {
     el.setAttribute('hidden', '');
-  }, 600); // CSS transition と揃える
+  }, 600);
 };
 
 const start = () => {
   const el = document.querySelector<HTMLElement>('.loading');
   if (!el) return;
 
-  // 遷移戻りで残っていたら出さない
-  if (document.documentElement.classList.contains('is-loaded')) {
-    el.setAttribute('hidden', '');
+  if (hasLoaded()) {
+    suppress();
     return;
   }
 
   const started = performance.now();
-
   const finish = () => {
     const wait = Math.max(0, MIN_MS - (performance.now() - started));
-    window.setTimeout(hide, wait);
+    window.setTimeout(() => hide(el), wait);
   };
 
-  if (document.readyState === 'complete') {
-    finish();
-  } else {
-    window.addEventListener('load', finish, { once: true });
-  }
+  if (document.readyState === 'complete') finish();
+  else window.addEventListener('load', finish, { once: true });
 };
 
 start();
+document.addEventListener('astro:after-swap', () => {
+  if (hasLoaded()) suppress();
+});
+document.addEventListener('astro:page-load', () => {
+  if (hasLoaded()) suppress();
+});

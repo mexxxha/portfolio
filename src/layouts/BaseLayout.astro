@@ -32,6 +32,11 @@ const { site } = Astro.props;
 		<link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 
 		<ClientRouter />
+		<script is:inline>
+			if (sessionStorage.getItem('site-loaded') === '1') {
+				document.documentElement.classList.add('is-loaded');
+			}
+		</script>
 	</head>
 	<body>
 		<Loading />
@@ -41,8 +46,5 @@ const { site } = Astro.props;
       <slot />
     </main>
     <Footer />
-		<script>
-			import '../scripts/lenis';
-		</script>
 	</body>
 </html>
