@@ -1,4 +1,4 @@
-const MIN_MS = 2000;
+const MIN_MS = 3000;
 const FLAG = 'site-loaded';
 
 const hasLoaded = () => sessionStorage.getItem(FLAG) === '1';

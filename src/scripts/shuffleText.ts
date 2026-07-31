@@ -49,6 +49,7 @@ const init = () => {
   );
 
   document.querySelectorAll<HTMLElement>('[data-shuffle-text]').forEach((target) => {
+    if (target.closest('.loading')) return;
     target.dataset.shufflePlaying = 'false';
     if (!target.dataset.shuffleOriginal) {
       target.dataset.shuffleOriginal = target.textContent ?? '';
