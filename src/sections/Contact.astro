@@ -26,10 +26,7 @@ const { sectionTitles, contact, socials } = content;
       </ul>
 
       <p class="contact__more">
-        <a class="contact__more_link" href="/contact">
-          お問い合わせフォームへ
-          <span class="contact__more_arrow" aria-hidden="true">→</span>
-        </a>
+        <a class="contact__more_link" href="/contact"> お問い合わせフォームへ </a>
       </p>
     </div>
   </div>
@@ -91,32 +88,32 @@ const { sectionTitles, contact, socials } = content;
     }
 
     &__more {
+      display: flex;
+      justify-content: center;
       margin: 36px 0;
     }
 
     &__more_link {
-      display: flex;
-      align-items: center;
+      display: inline-flex;
       justify-content: center;
       gap: 10px;
+      padding: 10px 22px;
+      border: 0.5px solid $c-border;
+      border-radius: 999px;
       font-size: 0.7rem;
       letter-spacing: 0.12em;
       color: inherit;
       opacity: 0.7;
-      transition: opacity 0.3s ease;
+      transition:
+        color 0.3s ease,
+        background-color 0.3s ease,
+        border-color 0.3s ease;
 
       &:hover {
-        opacity: 1;
-
-        .contact__more_arrow {
-          transform: translateX(4px);
-        }
+        color: $c-text-a;
+        background-color: $c-bg-a;
+        border-color: $c-bg-a;
       }
-    }
-
-    &__more_arrow {
-      display: inline-block;
-      transition: transform 0.3s ease;
     }
   }
 </style>
