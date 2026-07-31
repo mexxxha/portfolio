@@ -1,7 +1,9 @@
+// --- Dom ---
 const header = () => document.querySelector<HTMLElement>('.header');
 const button = () => document.querySelector<HTMLButtonElement>('.header__hamburger');
 const overlay = () => document.querySelector<HTMLElement>('.header__overlay');
 
+// --- State ---
 const setOpen = (open: boolean) => {
   const btn = button();
   const panel = overlay();
@@ -21,6 +23,7 @@ const toggle = () => {
   setOpen(btn.getAttribute('aria-expanded') !== 'true');
 };
 
+// --- Bind ---
 const bind = () => {
   const btn = button();
   const panel = overlay();
@@ -37,6 +40,7 @@ const bind = () => {
   });
 };
 
+// --- Boot ---
 bind();
 setOpen(false);
 document.addEventListener('astro:page-load', () => setOpen(false));

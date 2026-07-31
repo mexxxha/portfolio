@@ -1,3 +1,4 @@
+// --- Sync ---
 const updateIndicator = () => {
   const indicatorScroll = document.querySelector<HTMLElement>('.scroll__ruler');
   if (!indicatorScroll) return;
@@ -8,6 +9,7 @@ const updateIndicator = () => {
   indicatorScroll.style.setProperty('--progress', String(progress));
 };
 
+// --- Boot ---
 window.addEventListener('scroll', updateIndicator, { passive: true });
 window.addEventListener('resize', updateIndicator);
 document.addEventListener('astro:page-load', updateIndicator);

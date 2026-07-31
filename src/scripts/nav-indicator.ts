@@ -1,3 +1,4 @@
+// --- Path ---
 const normalize = (path: string) => path.replace(/\/+$/, '') || '/';
 
 const isMatch = (hrefPath: string, current: string) => {
@@ -5,6 +6,7 @@ const isMatch = (hrefPath: string, current: string) => {
   return target === '/' ? current === '/' : current === target || current.startsWith(`${target}/`);
 };
 
+// --- Active ---
 const syncActive = (links: HTMLAnchorElement[], current: string) => {
   let active: HTMLAnchorElement | null = null;
 
@@ -22,6 +24,24 @@ const syncActive = (links: HTMLAnchorElement[], current: string) => {
   return active;
 };
 
+// --- Indicator ---
+const moveIndicator = (nav: HTMLElement, indicator: HTMLElement, active: HTMLElement, animation: boolean) => {
+  if (!animation) indicator.style.transition = 'none';
+
+  const navRect = nav.getBoundingClientRect();
+  const linkRect = active.getBoundingClientRect();
+
+  indicator.style.width = `${linkRect.width}px`;
+  indicator.style.height = `${linkRect.height}px`;
+  indicator.style.transform = `translate(${linkRect.left - navRect.left}px, ${linkRect.top - navRect.top}px)`;
+
+  if (!animation) {
+    indicator.offsetHeight;
+    indicator.style.transition = '';
+  }
+};
+
+// --- Boot ---
 const update = (animation: boolean) => {
   const nav = document.querySelector<HTMLElement>('.header__nav');
   const indicator = document.querySelector<HTMLElement>('.header__nav_indicator');
@@ -32,19 +52,7 @@ const update = (animation: boolean) => {
   const current = normalize(location.pathname);
   const active = syncActive(navLinks, current) ?? navLinks[0];
   syncActive(overlayLinks, current);
-
-  if (!animation) indicator.style.transition = 'none';
-
-  const navRect = nav.getBoundingClientRect();
-  const linkRect = active.getBoundingClientRect();
-  indicator.style.width = `${linkRect.width}px`;
-  indicator.style.height = `${linkRect.height}px`;
-  indicator.style.transform = `translate(${linkRect.left - navRect.left}px, ${linkRect.top - navRect.top}px)`;
-
-  if (!animation) {
-    indicator.offsetHeight;
-    indicator.style.transition = '';
-  }
+  moveIndicator(nav, indicator, active, animation);
 };
 
 update(false);

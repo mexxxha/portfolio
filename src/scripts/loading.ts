@@ -2,6 +2,7 @@ const MIN_MS = 3000;
 const MORPH_MS = 800;
 const FLAG = 'site-loaded';
 
+// --- Flag ---
 const hasLoaded = () => sessionStorage.getItem(FLAG) === '1';
 
 const markLoaded = () => {
@@ -9,6 +10,7 @@ const markLoaded = () => {
   document.documentElement.classList.add('is-loaded');
 };
 
+// --- Hide ---
 const suppress = () => {
   markLoaded();
   document.querySelectorAll<HTMLElement>('.loading').forEach((el) => {
@@ -27,6 +29,19 @@ const finishLoading = (el: HTMLElement) => {
   }, 400);
 };
 
+// --- Morph ---
+const pinLogo = (from: HTMLElement, fromRect: DOMRect) => {
+  from.style.position = 'fixed';
+  from.style.top = `${fromRect.top}px`;
+  from.style.left = `${fromRect.left}px`;
+  from.style.width = `${fromRect.width}px`;
+  from.style.height = `${fromRect.height}px`;
+  from.style.margin = '0';
+  from.style.zIndex = '10000';
+  from.style.transformOrigin = 'top left';
+  from.style.transition = `transform ${MORPH_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`;
+};
+
 const morphLogoThenHide = (loadingRoot: HTMLElement) => {
   const from = loadingRoot.querySelector<HTMLElement>('[data-loading-logo]');
   const to = document.querySelector<HTMLElement>('[data-hero-logo]');
@@ -40,16 +55,7 @@ const morphLogoThenHide = (loadingRoot: HTMLElement) => {
 
   const fromRect = from.getBoundingClientRect();
   const toRect = to.getBoundingClientRect();
-
-  from.style.position = 'fixed';
-  from.style.top = `${fromRect.top}px`;
-  from.style.left = `${fromRect.left}px`;
-  from.style.width = `${fromRect.width}px`;
-  from.style.height = `${fromRect.height}px`;
-  from.style.margin = '0';
-  from.style.zIndex = '10000';
-  from.style.transformOrigin = 'top left';
-  from.style.transition = `transform ${MORPH_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`;
+  pinLogo(from, fromRect);
 
   loadingRoot.classList.add('is-bg-out');
 
@@ -67,6 +73,7 @@ const morphLogoThenHide = (loadingRoot: HTMLElement) => {
   }, MORPH_MS);
 };
 
+// --- Boot ---
 const start = () => {
   const el = document.querySelector<HTMLElement>('.loading');
   if (!el) return;

@@ -2,6 +2,7 @@ let observer: IntersectionObserver | null = null;
 let activeIndex = -1;
 let onLoad: (() => void) | null = null;
 
+// --- Lifecycle ---
 const cleanup = () => {
   observer?.disconnect();
   observer = null;
@@ -12,18 +13,9 @@ const cleanup = () => {
   activeIndex = -1;
 };
 
-const init = () => {
-  cleanup();
-
-  const steps = document.querySelectorAll<HTMLElement>('[data-works-step]');
-  const panels = document.querySelectorAll<HTMLElement>('[data-works-panel]');
-  const current = document.querySelector<HTMLElement>('[data-works-current]');
-
-  if (steps.length <= 1 || panels.length <= 1) return;
-
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const setActive = (index: number) => {
+// --- State ---
+const createSetActive = (panels: NodeListOf<HTMLElement>, current: HTMLElement | null) => {
+  return (index: number) => {
     if (index === activeIndex) return;
     activeIndex = index;
 
@@ -34,33 +26,30 @@ const init = () => {
 
     if (current) current.textContent = String(index + 1);
   };
+};
 
-  const getIndexFromScroll = () => {
-    const viewportCenter = window.innerHeight / 2;
-    let nearestIndex = 0;
-    let nearestDistance = Infinity;
+// --- Sync ---
+const getIndexFromScroll = (steps: NodeListOf<HTMLElement>) => {
+  const viewportCenter = window.innerHeight / 2;
+  let nearestIndex = 0;
+  let nearestDistance = Infinity;
 
-    steps.forEach((step) => {
-      const rect = step.getBoundingClientRect();
-      const stepCenter = rect.top + rect.height / 2;
-      const distance = Math.abs(stepCenter - viewportCenter);
+  steps.forEach((step) => {
+    const rect = step.getBoundingClientRect();
+    const stepCenter = rect.top + rect.height / 2;
+    const distance = Math.abs(stepCenter - viewportCenter);
 
-      if (distance < nearestDistance) {
-        nearestDistance = distance;
-        nearestIndex = Number(step.dataset.index ?? 0);
-      }
-    });
+    if (distance < nearestDistance) {
+      nearestDistance = distance;
+      nearestIndex = Number(step.dataset.index ?? 0);
+    }
+  });
 
-    return nearestIndex;
-  };
+  return nearestIndex;
+};
 
-  const syncFromScroll = () => setActive(getIndexFromScroll());
-
-  if (prefersReducedMotion) {
-    syncFromScroll();
-    return;
-  }
-
+// --- Observe ---
+const attachObserver = (steps: NodeListOf<HTMLElement>, setActive: (index: number) => void) => {
   observer = new IntersectionObserver(
     (entries) => {
       const visible = entries
@@ -78,6 +67,28 @@ const init = () => {
   );
 
   steps.forEach((step) => observer?.observe(step));
+};
+
+// --- Boot ---
+const init = () => {
+  cleanup();
+
+  const steps = document.querySelectorAll<HTMLElement>('[data-works-step]');
+  const panels = document.querySelectorAll<HTMLElement>('[data-works-panel]');
+  const current = document.querySelector<HTMLElement>('[data-works-current]');
+
+  if (steps.length <= 1 || panels.length <= 1) return;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const setActive = createSetActive(panels, current);
+  const syncFromScroll = () => setActive(getIndexFromScroll(steps));
+
+  if (prefersReducedMotion) {
+    syncFromScroll();
+    return;
+  }
+
+  attachObserver(steps, setActive);
 
   syncFromScroll();
   requestAnimationFrame(syncFromScroll);
