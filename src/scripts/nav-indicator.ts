@@ -31,9 +31,8 @@ const update = (animation: boolean) => {
 
   const current = normalize(location.pathname);
   const active = syncActive(navLinks, current) ?? navLinks[0];
-  syncActive(overlayLinks, current); // ← これが今回のポイント
+  syncActive(overlayLinks, current);
 
-  // インジケーター位置（今までどおり active 基準）
   if (!animation) indicator.style.transition = 'none';
 
   const navRect = nav.getBoundingClientRect();

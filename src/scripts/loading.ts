@@ -31,7 +31,6 @@ const morphLogoThenHide = (loadingRoot: HTMLElement) => {
   const from = loadingRoot.querySelector<HTMLElement>('[data-loading-logo]');
   const to = document.querySelector<HTMLElement>('[data-hero-logo]');
 
-  // ヒーローがないページは普通にフェード
   if (!from || !to) {
     finishLoading(loadingRoot);
     return;
@@ -42,7 +41,6 @@ const morphLogoThenHide = (loadingRoot: HTMLElement) => {
   const fromRect = from.getBoundingClientRect();
   const toRect = to.getBoundingClientRect();
 
-  // ロゴを画面座標で固定
   from.style.position = 'fixed';
   from.style.top = `${fromRect.top}px`;
   from.style.left = `${fromRect.left}px`;
@@ -53,7 +51,6 @@ const morphLogoThenHide = (loadingRoot: HTMLElement) => {
   from.style.transformOrigin = 'top left';
   from.style.transition = `transform ${MORPH_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`;
 
-  // 背景・文字・バーだけ先に消す
   loadingRoot.classList.add('is-bg-out');
 
   const dx = toRect.left - fromRect.left;
@@ -79,7 +76,6 @@ const start = () => {
     return;
   }
 
-  // 初回：ヒーローラゴを隠しておく
   document.querySelector<HTMLElement>('[data-hero-logo]')?.classList.add('is-waiting');
 
   const started = performance.now();

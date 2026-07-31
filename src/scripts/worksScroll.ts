@@ -19,7 +19,6 @@ const init = () => {
   const panels = document.querySelectorAll<HTMLElement>('[data-works-panel]');
   const current = document.querySelector<HTMLElement>('[data-works-current]');
 
-  // Works がないページでは何もしない
   if (steps.length <= 1 || panels.length <= 1) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

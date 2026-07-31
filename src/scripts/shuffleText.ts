@@ -8,7 +8,6 @@ const isPageReady = () => document.documentElement.classList.contains('is-loaded
 const play = (element: HTMLElement) => {
   if (element.dataset.shufflePlaying === 'true') return;
 
-  // ローダー内のテキストはローダー表示中でも動かしてよい
   const inLoading = element.closest('.loading') !== null;
   if (!inLoading && !isPageReady()) return;
 
@@ -37,7 +36,6 @@ const init = () => {
         if (!entry.isIntersecting) return;
         const element = entry.target as HTMLElement;
 
-        // ページ未準備なら、まだ unobserve しない（ロード後に再判定）
         const inLoading = element.closest('.loading') !== null;
         if (!inLoading && !isPageReady()) return;
 
@@ -57,7 +55,6 @@ const init = () => {
     observer?.observe(target);
   });
 
-  // ローダー終了後に、画面内の要素を再度評価する
   if (!isPageReady() && !waitingForLoad) {
     waitingForLoad = true;
 
@@ -66,7 +63,6 @@ const init = () => {
       init();
     };
 
-    // loading.ts が is-loaded を付けるのを待つ
     const check = () => {
       if (isPageReady()) {
         onReady();
