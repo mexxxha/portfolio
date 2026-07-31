@@ -9,7 +9,7 @@ const updateIndicator = () => {
 };
 
 window.addEventListener('scroll', updateIndicator, { passive: true });
-window.addEventListener('resize', updateIndicator);
+// window.addEventListener('resize', updateIndicator);
 document.addEventListener('astro:page-load', updateIndicator);
 
 updateIndicator();
