@@ -6,7 +6,7 @@ import SectionTitle from '../components/SectionTitle.astro';
 
 const { sectionTitles } = content;
 const works = await getCollection('works');
-const sorted = works.sort((a, b) => a.data.order - b.data.order);
+const sorted = works.sort((a, b) => b.data.date.localeCompare(a.data.date));
 const items = sorted.slice(0, 2);
 const hasMore = sorted.length > 2;
 const isScrollSwap = items.length > 1;

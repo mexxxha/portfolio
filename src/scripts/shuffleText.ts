@@ -14,7 +14,7 @@ const init = () => {
         const shuffleText = new ShuffleText(element);
 
         shuffleText.sourceRandomCharacter = '░▒▓█';
-        shuffleText.duration = 900;
+        shuffleText.duration = 850;
         shuffleText.start();
 
         currentObserver.unobserve(element);

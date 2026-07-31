@@ -6,7 +6,9 @@ import SectionTitle from '../../components/SectionTitle.astro';
 import { content } from '../../data/content';
 
 const { sectionTitles, site } = content;
-const works = (await getCollection('works')).sort((a, b) => a.data.order - b.data.order);
+const works = (await getCollection('works')).sort((a, b) =>
+  b.data.date.localeCompare(a.data.date),
+);
 ---
 
 <BaseLayout
