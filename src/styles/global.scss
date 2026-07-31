@@ -30,6 +30,10 @@ body {
   line-height: $lh-base;
 }
 
+body.is-menu-open {
+  overflow: hidden;
+}
+
 img {
   display: block;
   max-width: 100%;
