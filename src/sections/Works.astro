@@ -9,68 +9,49 @@ const works = await getCollection('works');
 const sorted = works.sort((a, b) => b.data.date.localeCompare(a.data.date));
 const items = sorted.slice(0, 3);
 const hasMore = sorted.length > 3;
-const isScrollSwap = items.length > 1;
 ---
 
 <section class="works" id="works">
   <div class="works__inner">
-    <div class:list={['works__track', { 'is-single': !isScrollSwap }]}>
-      <div class="works__sticky">
-        <SectionTitle content={sectionTitles.works} />
-        {
-          items.length === 0 ? (
-            <p class="works__empty">{sectionTitles.works.empty}</p>
-          ) : (
-            <>
-              <article class="works__card">
-                {items.map((entry, index) => (
-                  <a class:list={['works__panel', { 'is-active': index === 0 }]} href={`/works/${entry.id}`} data-works-panel data-index={index} aria-label={`${entry.data.title}の詳細`}>
-                    <div class="works__media">
-                      <Image class="works__image" src={entry.data.thumbnail} alt={entry.data.title} />
-                    </div>
+    <SectionTitle content={sectionTitles.works} />
+    {
+      items.length === 0 ? (
+        <p class="works__empty">{sectionTitles.works.empty}</p>
+      ) : (
+        <>
+          <ul class="works__list">
+            {items.map((entry) => (
+              <li class="works__item">
+                <a class="works__card" href={`/works/${entry.id}`} aria-label={`${entry.data.title}の詳細`}>
+                  <div class="works__media">
+                    <Image class="works__image" src={entry.data.thumbnail} alt={entry.data.title} />
+                  </div>
 
-                    <div class="works__body">
-                      <p class="works__date">{entry.data.date}</p>
-                      <h3 class="works__title">{entry.data.title}</h3>
-                      <p class="works__desc">{entry.data.description}</p>
+                  <div class="works__body">
+                    <p class="works__date">{entry.data.date}</p>
+                    <h3 class="works__title">{entry.data.title}</h3>
+                    <p class="works__desc">{entry.data.description}</p>
 
-                      <ul class="works__tech">
-                        {entry.data.tech.map((tech) => (
-                          <li class="works__tech_item">{tech}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </a>
-                ))}
-
-                {isScrollSwap && (
-                  <p class="works__pager" data-works-pager>
-                    <span data-works-current>1</span> / {items.length}
-                  </p>
-                )}
-              </article>
-              {hasMore && (
-                <p class="works__more">
-                  <a class="works__more_link" href="/works">
-                    もっと見る
-                  </a>
-                </p>
-              )}
-            </>
-          )
-        }
-      </div>
-
-      {
-        isScrollSwap && (
-          <div class="works__steps" aria-hidden="true">
-            {items.map((_, index) => (
-              <div class="works__step" data-works-step data-index={index} />
+                    <ul class="works__tech">
+                      {entry.data.tech.map((tech) => (
+                        <li class="works__tech_item">{tech}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </a>
+              </li>
             ))}
-          </div>
-        )
-      }
-    </div>
+          </ul>
+          {hasMore && (
+            <p class="works__more">
+              <a class="works__more_link" href="/works">
+                もっと見る
+              </a>
+            </p>
+          )}
+        </>
+      )
+    }
   </div>
 </section>
 
@@ -79,31 +60,11 @@ const isScrollSwap = items.length > 1;
   @use '../styles/mixins' as *;
 
   .works {
-    &__track {
-      position: relative;
-
-      &.is-single {
-        .works__sticky {
-          position: static;
-        }
-
-        .works__card {
-          height: auto;
-          max-height: none;
-        }
-
-        .works__panel.is-active {
-          position: relative;
-        }
-      }
+    &__inner {
+      max-width: 1100px;
+      margin: 0 auto;
     }
-
-    &__sticky {
-      position: sticky;
-      top: 5rem;
-      z-index: $z-base;
-    }
-
+    
     &__empty {
       text-align: center;
       margin: 32px 0 0;
@@ -112,43 +73,32 @@ const isScrollSwap = items.length > 1;
       opacity: 0.7;
     }
 
-    &__card {
-      position: relative;
-      height: calc(100svh - 10rem);
-      max-height: 70svh;
-      border: 0.5px solid $c-border;
-      border-radius: 8px;
-      overflow: hidden;
+    &__list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin: 32px 0 0;
     }
 
-    &__panel {
-      position: absolute;
-      inset: 0;
+    &__card {
       display: grid;
       grid-template-columns: 1.2fr 1fr;
-      min-height: 0;
       gap: 24px;
       padding: 24px;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(12px);
+      border: 0.5px solid $c-border;
+      border-radius: 8px;
       transition:
-        opacity 0.4s ease,
-        transform 0.4s ease,
-        visibility 0.4s ease;
-      pointer-events: none;
+        border-color 0.4s ease,
+        transform 0.4s ease;
 
-      &.is-active {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-        pointer-events: auto;
+      &:hover {
+        border-color: $c-text;
+        transform: translateY(-2px);
       }
     }
 
     &__media {
-      min-height: 0;
-      height: 100%;
+      aspect-ratio: 16 / 10;
       border-radius: 4px;
       overflow: hidden;
     }
@@ -156,6 +106,11 @@ const isScrollSwap = items.length > 1;
     &__image {
       width: 100%;
       height: 100%;
+      transition: transform 0.4s ease;
+
+      .works__card:hover & {
+        transform: scale(1.03);
+      }
     }
 
     &__body {
@@ -163,7 +118,6 @@ const isScrollSwap = items.length > 1;
       flex-direction: column;
       justify-content: center;
       gap: 12px;
-      min-height: 0;
     }
 
     &__date {
@@ -194,32 +148,6 @@ const isScrollSwap = items.length > 1;
         font-size: 0.6rem;
         letter-spacing: 0.06em;
       }
-    }
-
-    &__link {
-      display: inline-flex;
-      margin-top: 8px;
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      text-decoration: underline;
-      text-underline-offset: 4px;
-    }
-
-    &__pager {
-      position: absolute;
-      right: 24px;
-      bottom: 16px;
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      opacity: 0.7;
-    }
-
-    &__steps {
-      pointer-events: none;
-    }
-
-    &__step {
-      height: 150vh;
     }
 
     &__more {
@@ -259,23 +187,8 @@ const isScrollSwap = items.length > 1;
   @include tab {
     .works {
       &__card {
-        height: calc(100svh - 8rem);
-        max-height: 65svh;
-      }
-
-      &__panel {
         grid-template-columns: 1fr;
-      }
-
-      &__track.is-single {
-        .works__card {
-          max-height: none;
-        }
       }
     }
   }
 </style>
-
-<script>
-  import '../scripts/worksScroll';
-</script>
