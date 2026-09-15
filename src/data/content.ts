@@ -110,13 +110,6 @@ export const content = {
   },
 
   footer: {
-    nav: [
-      { label: 'HOME', href: '/' },
-      { label: 'ABOUT', href: '/#about' },
-      { label: 'WORKS', href: '/works' },
-      { label: 'BLOG', href: '/blog' },
-      { label: 'CONTACT', href: '/contact' },
-    ],
     copyright: 'Mecha',
   },
 

@@ -3,7 +3,7 @@ import { content } from '../data/content';
 
 import SnsList from '../components/SnsList.astro';
 
-const { logo, footer } = content;
+const { logo, nav, footer } = content;
 const LogoIcon = logo.src;
 const year = new Date().getFullYear();
 ---
@@ -17,7 +17,7 @@ const year = new Date().getFullYear();
     <nav class="footer__nav" aria-label="フッターナビゲーション">
       <ul class="footer__nav_list">
         {
-          footer.nav.map((item) => (
+          nav.map((item) => (
             <li>
               <a class="footer__nav_link" href={item.href}>
                 {item.label}
