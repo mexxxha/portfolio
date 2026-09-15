@@ -1,9 +1,9 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionTitle from '../../components/SectionTitle.astro';
 import PillLink from '../../components/PillLink.astro';
+import WorkCard from '../../components/WorkCard.astro';
 import { content } from '../../data/content';
 
 const { sectionTitles, site } = content;
@@ -26,25 +26,7 @@ const works = (await getCollection('works')).sort((a, b) => b.data.date.localeCo
         ) : (
           <ul class="works__list">
             {works.map((entry) => (
-              <li class="works__item">
-                <a class="works__card" href={`/works/${entry.id}`}>
-                  <div class="works__media">
-                    <Image class="works__image" src={entry.data.thumbnail} alt={entry.data.title} />
-                  </div>
-
-                  <div class="works__body">
-                    <p class="works__date">{entry.data.date}</p>
-                    <h2 class="works__title">{entry.data.title}</h2>
-                    <p class="works__desc">{entry.data.description}</p>
-
-                    <ul class="works__tech">
-                      {entry.data.tech.map((tech) => (
-                        <li class="works__tech_item">{tech}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </a>
-              </li>
+              <WorkCard entry={entry} heading="h2" />
             ))}
           </ul>
         )
@@ -81,82 +63,13 @@ const works = (await getCollection('works')).sort((a, b) => b.data.date.localeCo
       margin: 32px 0 0;
     }
 
-    &__card {
-      display: grid;
-      height: 100%;
-      gap: 16px;
-      padding: 16px;
-      border: 0.5px solid $c-border;
-      border-radius: 8px;
-      transition:
-        border-color 0.4s ease,
-        transform 0.4s ease;
-
-      &:hover {
-        border-color: $c-text;
-        transform: translateY(-2px);
-      }
-    }
-
-    &__media {
-      aspect-ratio: 16 / 10;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    &__image {
-      height: 100%;
-      transition: transform 0.4s ease;
-
-      .works__card:hover & {
-        transform: scale(1.03);
-      }
-    }
-
-    &__body {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    &__date {
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      opacity: 0.7;
-    }
-
-    &__title {
-      font-size: 1rem;
-      line-height: 1.3;
-    }
-
-    &__desc {
-      font-size: 0.7rem;
-      opacity: 0.8;
-    }
-
-    &__tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 4px 0 0;
-    }
-
-    &__tech_item {
-      padding: 4px 10px;
-      border: 0.5px solid $c-border;
-      border-radius: 999px;
-      font-size: 0.6rem;
-      letter-spacing: 0.06em;
-    }
-
     &__back {
       display: flex;
       justify-content: center;
       margin: 48px 0 0;
     }
   }
-
+  
   @include tab {
     .works {
       &__list {
