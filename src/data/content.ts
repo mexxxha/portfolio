@@ -110,12 +110,6 @@ export const content = {
       value: 'hello@example.com',
       href: 'mailto:hello@example.com',
     },
-    form: {
-      nameLabel: 'お名前',
-      emailLabel: 'メールアドレス',
-      messageLabel: 'お問い合わせ内容',
-      submitLabel: '送信する',
-    },
   },
 
   footer: {
