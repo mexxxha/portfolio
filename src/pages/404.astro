@@ -1,0 +1,48 @@
+---
+import { content } from '../data/content';
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PillLink from '../components/PillLink.astro';
+
+const { site } = content;
+---
+
+<BaseLayout site={{ ...site, title: `404 | ${site.title}`, description: 'ページが見つかりませんでした。' }}>
+  <section class="not__found">
+    <p class="not__found_code">404</p>
+    <h1 class="not__found_title">Page not found</h1>
+    <p class="not__found_lead">お探しのページは存在しないか、移動した可能性があります。</p>
+    <p class="not__found_back">
+      <PillLink href="/">トップに戻る</PillLink>
+    </p>
+  </section>
+</BaseLayout>
+
+<style lang="scss">
+  .not__found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70svh;
+    gap: 16px;
+    padding-top: 6rem;
+
+    &_code {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      opacity: 0.6;
+    }
+
+    &_title {
+      font-size: 1.2rem;
+      letter-spacing: 0.2em;
+    }
+
+    &_lead {
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      opacity: 0.8;
+    }
+  }
+</style>

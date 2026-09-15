@@ -4,6 +4,7 @@ import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://mexcha.com',
   integrations: [icon()],
   output: 'static',
   vite: {

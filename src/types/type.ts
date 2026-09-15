@@ -26,25 +26,34 @@ export interface Logo {
 export interface SectionTitleContent {
   title: string;
   subtitle: string;
+  empty?: string;
 }
 
-export interface HeroContent {
+export interface AboutProfile {
   image: ImageMetadata;
-  imageAlt: string;
+  alt: string;
+  name: string;
+  role: string;
+  bio: string;
+  facts: { label: string; value: string }[];
 }
 
-export interface AboutContent {
+export interface SkillGroup {
   title: string;
-}
-
-export interface WorksContent {
-  title: string;
-}
-
-export interface BlogContent {
-  title: string;
+  items: { name: string; icon: string }[];
 }
 
 export interface ContactContent {
-  title: string;
+  lead: string;
+  formUrl: string;
+  formLabel: string;
+}
+
+export interface FooterContent {
+  copyright: string;
+}
+
+export interface AboutPageContent {
+  lead: string;
+  history: { year: string; title: string; description: string }[];
 }
