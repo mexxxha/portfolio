@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionTitle from '../../components/SectionTitle.astro';
 import SnsList from '../../components/SnsList.astro';
+import PillLink from '../../components/PillLink.astro';
 import { content } from '../../data/content';
 
 const { sectionTitles, site, contact } = content;
@@ -20,20 +21,16 @@ const { sectionTitles, site, contact } = content;
       <p class="contact-page__lead">{contact.lead}</p>
       <SnsList />
       <p class="contact-page__action">
-        <a class="contact-page__back_link" href={contact.formUrl} target="_blank" rel="noopener noreferrer">
-          {contact.formLabel}
-        </a>
+        <PillLink href={contact.formUrl} external>{contact.formLabel}</PillLink>
       </p>
       <p class="contact-page__back">
-        <a class="contact-page__back_link" href="/">トップに戻る</a>
+        <PillLink href="/">トップに戻る</PillLink>
       </p>
     </div>
   </section>
 </BaseLayout>
 
 <style lang="scss">
-  @use '../../styles/variables' as *;
-
   .contact-page {
     padding-top: 6rem;
 
@@ -60,29 +57,6 @@ const { sectionTitles, site, contact } = content;
     &__back {
       display: flex;
       justify-content: center;
-
-    }
-
-    &__back_link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 22px;
-      border: 0.5px solid $c-border;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      color: $c-text;
-      transition:
-        color 0.4s ease,
-        background-color 0.4s ease,
-        border-color 0.4s ease;
-
-      &:hover {
-        color: $c-text-a;
-        background-color: $c-bg-a;
-        border-color: $c-bg-a;
-      }
     }
   }
 </style>

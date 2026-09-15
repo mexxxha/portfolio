@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import About from '../sections/About.astro';
 import Skills from '../sections/Skills.astro';
+import PillLink from '../components/PillLink.astro';
 import { content } from '../data/content';
 
 const { site, aboutPage } = content;
@@ -36,19 +37,16 @@ const { site, aboutPage } = content;
     </section>
 
     <p class="about__back">
-      <a class="about__back_link" href="/">トップに戻る</a>
+      <PillLink href="/">トップに戻る</PillLink>
     </p>
   </div>
 </BaseLayout>
 
 <style lang="scss">
-  @use '../styles/variables' as *;
-  @use '../styles/mixins' as *;
-
   .about {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 6rem 24px 0;
+    padding: 6rem 24px;
 
     &__history {
       margin-top: 100px;
@@ -95,28 +93,6 @@ const { site, aboutPage } = content;
       display: flex;
       justify-content: center;
       margin: 80px 0 0;
-
-      &_link {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 22px;
-        border: 0.5px solid $c-border;
-        border-radius: 999px;
-        font-size: 0.7rem;
-        letter-spacing: 0.2em;
-        color: $c-text;
-        transition:
-          color 0.4s ease,
-          background-color 0.4s ease,
-          border-color 0.4s ease;
-
-        &:hover {
-          color: $c-text-a;
-          background-color: $c-bg-a;
-          border-color: $c-bg-a;
-        }
-      }
     }
   }
 

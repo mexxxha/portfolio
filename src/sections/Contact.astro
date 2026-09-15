@@ -2,6 +2,7 @@
 import { content } from '../data/content';
 import SectionTitle from '../components/SectionTitle.astro';
 import SnsList from '../components/SnsList.astro';
+import PillLink from '../components/PillLink.astro';
 
 const { sectionTitles, contact } = content;
 ---
@@ -16,16 +17,13 @@ const { sectionTitles, contact } = content;
       <SnsList />
 
       <p class="contact__more">
-        <a class="contact__more_link" href={contact.formUrl} target="_blank" rel="noopener noreferrer">{contact.formLabel}</a>
+        <PillLink href={contact.formUrl} external>{contact.formLabel}</PillLink>
       </p>
     </div>
   </div>
 </section>
 
 <style lang="scss">
-  @use '../styles/variables' as *;
-  @use '../styles/mixins' as *;
-
   .contact {
     width: 100%;
 
@@ -52,28 +50,6 @@ const { sectionTitles, contact } = content;
     &__more {
       display: flex;
       justify-content: center;
-    }
-
-    &__more_link {
-      display: inline-flex;
-      justify-content: center;
-      gap: 10px;
-      padding: 10px 22px;
-      border: 0.5px solid $c-border;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      opacity: 0.7;
-      transition:
-        color 0.4s ease,
-        background-color 0.4s ease,
-        border-color 0.4s ease;
-
-      &:hover {
-        color: $c-text-a;
-        background-color: $c-bg-a;
-        border-color: $c-bg-a;
-      }
     }
   }
 </style>

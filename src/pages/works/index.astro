@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionTitle from '../../components/SectionTitle.astro';
+import PillLink from '../../components/PillLink.astro';
 import { content } from '../../data/content';
 
 const { sectionTitles, site } = content;
@@ -50,16 +51,13 @@ const works = (await getCollection('works')).sort((a, b) => b.data.date.localeCo
       }
 
       <p class="works__back">
-        <a class="works__back_link" href="/">トップに戻る</a>
+        <PillLink href="/">トップに戻る</PillLink>
       </p>
     </div>
   </section>
 </BaseLayout>
 
 <style lang="scss">
-  @use '../../styles/variables' as *;
-  @use '../../styles/mixins' as *;
-
   .works {
     padding-top: 6rem;
 
@@ -156,28 +154,6 @@ const works = (await getCollection('works')).sort((a, b) => b.data.date.localeCo
       display: flex;
       justify-content: center;
       margin: 48px 0 0;
-
-      &_link {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 22px;
-        border: 0.5px solid $c-border;
-        border-radius: 999px;
-        font-size: 0.7rem;
-        letter-spacing: 0.2em;
-        color: $c-text;
-        transition:
-          color 0.4s ease,
-          background-color 0.4s ease,
-          border-color 0.4s ease;
-
-        &:hover {
-          color: $c-text-a;
-          background-color: $c-bg-a;
-          border-color: $c-bg-a;
-        }
-      }
     }
   }
 

@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import { content } from '../data/content';
 import SectionTitle from '../components/SectionTitle.astro';
+import PillLink from '../components/PillLink.astro';
 
 type Props = {
   detail?: boolean;
@@ -43,9 +44,7 @@ const { profile } = content.about;
     {
       !detail && (
         <p class="about__more">
-          <a class="about__more_link" href="/about">
-            MORE
-          </a>
+          <PillLink href="/about">MORE</PillLink>
         </p>
       )
     }
@@ -53,9 +52,6 @@ const { profile } = content.about;
 </section>
 
 <style lang="scss">
-  @use '../styles/variables' as *;
-  @use '../styles/mixins' as *;
-
   .about {
     width: 100%;
 
@@ -132,28 +128,6 @@ const { profile } = content.about;
       display: flex;
       justify-content: center;
       margin-top: 40px;
-
-      &_link {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 22px;
-        border: 0.5px solid $c-border;
-        border-radius: 999px;
-        font-size: 0.7rem;
-        letter-spacing: 0.2em;
-        opacity: 0.7;
-        transition:
-          color 0.4s ease,
-          background-color 0.4s ease,
-          border-color 0.4s ease;
-
-        &:hover {
-          color: $c-text-a;
-          background-color: $c-bg-a;
-          border-color: $c-bg-a;
-        }
-      }
     }
   }
 
