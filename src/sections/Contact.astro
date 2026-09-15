@@ -1,9 +1,9 @@
 ---
-import { Icon } from 'astro-icon/components';
 import { content } from '../data/content';
 import SectionTitle from '../components/SectionTitle.astro';
+import SnsList from '../components/SnsList.astro';
 
-const { sectionTitles, contact, socials } = content;
+const { sectionTitles, contact } = content;
 ---
 
 <section class="contact" id="contact">
@@ -13,17 +13,7 @@ const { sectionTitles, contact, socials } = content;
     <div class="contact__body">
       <p class="contact__lead">{contact.lead}</p>
 
-      <ul class="contact__sns">
-        {
-          socials.map((item) => (
-            <li class="contact__sns_item">
-              <a class="contact__sns_link" href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.label}>
-                <Icon class="contact__sns_icon" name={item.icon} />
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+      <SnsList />
 
       <p class="contact__more">
         <a class="contact__more_link" href={contact.formUrl} target="_blank" rel="noopener noreferrer">{contact.formLabel}</a>
@@ -45,8 +35,11 @@ const { sectionTitles, contact, socials } = content;
     }
 
     &__body {
-      margin: 48px auto;
+      display: flex;
+      flex-direction: column;
       max-width: 36rem;
+      gap: 32px;
+      margin: 48px auto;
     }
 
     &__lead {
@@ -56,40 +49,9 @@ const { sectionTitles, contact, socials } = content;
       opacity: 0.7;
     }
 
-    &__sns {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin: 28px 0 0;
-    }
-
-    &__sns_link {
-      display: grid;
-      place-items: center;
-      width: 36px;
-      height: 36px;
-      border: 0.5px solid $c-border;
-      border-radius: 50%;
-      opacity: 0.7;
-      transition:
-        opacity 0.4s ease,
-        border-color 0.4s ease;
-
-      &:hover {
-        opacity: 1;
-        border-color: $c-text;
-      }
-    }
-
-    &__sns_icon {
-      width: 14px;
-      height: 14px;
-    }
-
     &__more {
       display: flex;
       justify-content: center;
-      margin: 36px 0;
     }
 
     &__more_link {

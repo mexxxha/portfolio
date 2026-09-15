@@ -1,9 +1,9 @@
 ---
-import { Image } from 'astro:assets';
-import { Icon } from 'astro-icon/components';
 import { content } from '../data/content';
 
-const { logo, socials, footer } = content;
+import SnsList from '../components/SnsList.astro';
+
+const { logo, footer } = content;
 const LogoIcon = logo.src;
 const year = new Date().getFullYear();
 ---
@@ -28,17 +28,7 @@ const year = new Date().getFullYear();
       </ul>
     </nav>
 
-    <ul class="footer__sns">
-      {
-        socials.map((item) => (
-          <li>
-            <a class="footer__sns_link" href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.label}>
-              <Icon class="footer__sns_icon" name={item.icon} />
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    <SnsList />
 
     <p class="footer__copyright">&copy; {year} {footer.copyright}</p>
   </div>
@@ -88,34 +78,6 @@ const year = new Date().getFullYear();
       &:hover {
         opacity: 1;
       }
-    }
-
-    &__sns {
-      display: flex;
-      gap: 10px;
-    }
-
-    &__sns_link {
-      display: grid;
-      place-items: center;
-      width: 32px;
-      height: 32px;
-      border: 0.5px solid $c-border;
-      border-radius: 50%;
-      opacity: 0.7;
-      transition:
-        opacity 0.4s ease,
-        border-color 0.4s ease;
-
-      &:hover {
-        opacity: 1;
-        border-color: $c-text;
-      }
-    }
-
-    &__sns_icon {
-      width: 12px;
-      height: 12px;
     }
 
     &__copyright {
