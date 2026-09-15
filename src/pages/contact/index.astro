@@ -21,7 +21,7 @@ const { sectionTitles, site, contact } = content;
       <p class="contact-page__lead">{contact.lead}</p>
       <SnsList />
       <p class="contact-page__action">
-        <PillLink href={contact.formUrl} external>{contact.formLabel}</PillLink>
+        <PillLink href={contact.formUrl} ariaLabel="お問い合わせフォームへ（新しいタブで開く）" external>{contact.formLabel}</PillLink>
       </p>
       <p class="contact-page__back">
         <PillLink href="/">トップに戻る</PillLink>
