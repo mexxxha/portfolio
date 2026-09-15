@@ -105,11 +105,8 @@ export const content = {
 
   contact: {
     lead: 'ご依頼・ご相談はお気軽にご連絡ください。',
-    email: {
-      label: 'Email',
-      value: 'hello@example.com',
-      href: 'mailto:hello@example.com',
-    },
+    formUrl: 'https://forms.gle/uCoaTy4fxyEBYJ2Z9',
+    formLabel: 'お問い合わせフォームへ',
   },
 
   footer: {

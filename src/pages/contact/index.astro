@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionTitle from '../../components/SectionTitle.astro';
+import { Icon } from 'astro-icon/components';
 import { content } from '../../data/content';
 
-const { sectionTitles, site, contact } = content;
+const { sectionTitles, site, contact, socials } = content;
 ---
 
 <BaseLayout
@@ -19,6 +20,30 @@ const { sectionTitles, site, contact } = content;
       <p class="contact-page__lead">{contact.lead}</p>
 
       <!-- SNS（任意） -->
+
+      <ul class="contact-page__sns">
+        {
+          socials.map((item) => (
+            <li class="contact-page__sns_item">
+              <a
+                class="contact-page__sns_link"
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={item.label}
+              >
+                <Icon class="contact-page__sns_icon" name={item.icon} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="contact-page__action">
+        <a class="contact-page__back_link" href={contact.formUrl} target="_blank" rel="noopener noreferrer">
+          {contact.formLabel}
+        </a>
+      </p>
 
       <p class="contact-page__back">
         <a class="contact-page__back_link" href="/">トップに戻る</a>
@@ -44,6 +69,42 @@ const { sectionTitles, site, contact } = content;
       font-size: 0.8rem;
       letter-spacing: 0.06em;
       opacity: 0.8;
+    }
+
+    &__sns {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 28px 0 0;
+    }
+
+    &__sns_link {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border: 0.5px solid $c-border;
+      border-radius: 50%;
+      opacity: 0.7;
+      transition:
+        opacity 0.4s ease,
+        border-color 0.4s ease;
+
+      &:hover {
+        opacity: 1;
+        border-color: $c-text;
+      }
+    }
+
+    &__sns_icon {
+      width: 14px;
+      height: 14px;
+    }
+
+    &__action {
+      display: flex;
+      justify-content: center;
+      margin: 40px 0 0;
     }
 
     &__back {
