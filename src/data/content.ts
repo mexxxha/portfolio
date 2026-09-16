@@ -6,7 +6,7 @@ import profileImage from '../assets/profile.jpg';
 export const content = {
   site: {
     title: 'Mecha',
-    description: 'Mechaのポートフォリオ',
+    description: 'Mecha（mexcha.com）のポートフォリオ。フロントエンドを中心に制作しています。',
     lang: 'ja',
     ogImage: '/ogp.png',
   } satisfies SiteContent,
