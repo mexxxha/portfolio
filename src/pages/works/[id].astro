@@ -51,7 +51,7 @@ const { title, description, date, type, tech, thumbnail, liveUrl } = entry.data;
       {
         liveUrl && (
           <p class="work__external">
-            <a class="work__external_link" href={liveUrl} target="_blank" rel="noopener noreferrer">
+            <a class="work__external_link" href={liveUrl} aria-label="View Site（新しいタブで開く）" target="_blank" rel="noopener noreferrer">
               View Site
             </a>
           </p>

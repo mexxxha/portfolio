@@ -28,7 +28,7 @@ const posts = (await getCollection('blog')).sort((a, b) =>
         ) : (
           <ul class="blog__list">
             {posts.map((entry) => (
-              <BlogCard entry={entry} heading="h2" />
+              <BlogCard entry={entry} heading="h3" />
             ))}
           </ul>
         )

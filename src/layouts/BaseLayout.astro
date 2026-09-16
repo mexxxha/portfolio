@@ -33,6 +33,7 @@ const ogImage = new URL(site.ogImage, Astro.site).href;
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:title" content={site.title} />
+    <meta property="og:site_name" content={site.title} />
     <meta property="og:description" content={site.description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
