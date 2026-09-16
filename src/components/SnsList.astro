@@ -8,7 +8,7 @@ const { socials } = content;
 <ul class="sns__list">
   {socials.map((item) => (
     <li>
-      <a class="sns__list_link" href={item.href} target="_blank" aria-label={item.label} rel="noopener noreferrer">
+      <a class="sns__list_link" href={item.href} target="_blank" aria-label={item.ariaLabel} rel="noopener noreferrer">
         <Icon class="sns__list_icon" name={item.icon} />
       </a>
     </li>

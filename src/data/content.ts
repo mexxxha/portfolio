@@ -12,8 +12,8 @@ export const content = {
   } satisfies SiteContent,
 
   socials: [
-    { label: '_mechaxx', href: 'https://x.com/_mechaxx', icon: 'simple-icons:x' },
-    { label: 'mexaquin', href: 'https://www.instagram.com/mexaquin/', icon: 'simple-icons:instagram' },
+    { label: '_mechaxx', href: 'https://x.com/_mechaxx', icon: 'simple-icons:x', ariaLabel: 'X:_mechaxx（新しいタブで開く）' },
+    { label: 'mexaquin', href: 'https://www.instagram.com/mexaquin/', icon: 'simple-icons:instagram', ariaLabel: 'Instagram:mexaquin（新しいタブで開く）' },
   ],
 
   nav: [

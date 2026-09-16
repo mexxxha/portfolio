@@ -48,7 +48,7 @@ const isCurrent = (href: string) => {
     {
       socials.map((item) => (
         <li class="header__sns_item">
-          <a class="header__sns_link" href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.label}>
+          <a class="header__sns_link" href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.ariaLabel}>
             <Icon class="header__sns_icon" name={item.icon} />
             <span class="header__sns_label">{item.label}</span>
           </a>
