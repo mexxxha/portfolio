@@ -71,7 +71,7 @@ export const content = {
   about: {
     profile: {
       image: profileImage,
-      alt: 'プロフィール画像',
+      alt: 'Mechaのプロフィールアイコン',
       name: 'Mecha',
       role: 'Front-End Developer',
       bio: 'テキストテキストテキストテキストテキストテキストテキスト',
