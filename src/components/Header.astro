@@ -1,6 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { content } from '../data/content';
+import SnsList from './SnsList.astro';
 
 const { nav, socials } = content;
 const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
@@ -32,17 +33,20 @@ const isCurrent = (href: string) => {
   </button>
   <!-- Tablet/SP：全画面オーバーレイ -->
   <div class="header__overlay" id="header-overlay" aria-hidden="true">
-    <ul class="header__overlay_list">
-      {
-        nav.map((item) => (
-          <li>
-            <a class:list={['header__overlay_link', isCurrent(item.href) && 'is-active']} href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-              {item.label}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    <div class="header__overlay_inner">
+      <ul class="header__overlay_list">
+        {
+          nav.map((item) => (
+            <li>
+              <a class:list={['header__overlay_link', isCurrent(item.href) && 'is-active']} href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <SnsList />
+    </div>
   </div>
   <ul class="header__sns">
     {
@@ -163,6 +167,13 @@ const isCurrent = (href: string) => {
         opacity 0.4s ease,
         visibility 0.4s ease;
 
+      &_inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 48px;
+      }
+
       &_list {
         display: flex;
         flex-direction: column;
@@ -269,7 +280,7 @@ const isCurrent = (href: string) => {
       }
 
       &__sns {
-        display: none; // オーバーレイに移すなら残してもよい
+        display: none;
       }
     }
   }
