@@ -74,7 +74,10 @@ export const content = {
       alt: 'Mechaのプロフィールアイコン',
       name: 'Mecha',
       role: 'Front-End Developer',
-      bio: '東京を拠点に、LP・コーポレートサイト・ポートフォリオを中心としたWeb制作をしています。見た目の設計から実装まで、同じ作業のなかで進めています。',
+      bio: [
+        'はじめまして。Mecha（めちゃ）です。',
+        '東京を拠点に、LP・コーポレートサイト・ポートフォリオを中心としたWeb制作をしています。\n見た目の設計から実装まで行っています。',
+      ].join('\n\n'),
       facts: [
         { label: 'Based in', value: 'Tokyo, Japan' },
         { label: 'Born', value: '1996' },
