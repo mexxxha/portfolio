@@ -23,6 +23,7 @@ const { title, description, date, tags, thumbnail, body } = post;
     ...site,
     title: `${title} | ${site.title}`,
     description,
+    ogImage: thumbnail?.url ?? site.ogImage,
   }}
 >
   <article class="blog">

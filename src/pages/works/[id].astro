@@ -26,6 +26,7 @@ const { title, description, date, type, tech, thumbnail, liveUrl, body } = work;
     ...site,
     title: `${title} | ${site.title}`,
     description,
+    ogImage: thumbnail.url,
   }}
 >
   <article class="work">
