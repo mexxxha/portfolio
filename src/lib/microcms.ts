@@ -8,7 +8,7 @@ const client = createClient({
 export type Work = {
   title: string;
   description: string;
-  type: string;
+  type: string[];
   tech: string[];
   thumbnail: MicroCMSImage;
   liveUrl?: string;
