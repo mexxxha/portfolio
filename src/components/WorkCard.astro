@@ -9,7 +9,7 @@ type Props = {
 };
 
 const { work, heading: Heading = 'h3', variant = 'stack' } = Astro.props;
-const { title, date, description, thumbnail, tech, slug } = work;
+const { title, publishedAt, description, thumbnail, tech, slug } = work;
 ---
 
 <li class:list={['work__card', variant === 'row' && 'work__card_row']}>
@@ -18,7 +18,7 @@ const { title, date, description, thumbnail, tech, slug } = work;
       <Image class="work__card_image" src={thumbnail.url} alt={title} inferSize />
     </div>
     <div class="work__card_body">
-      <p class="work__card_date">{date.slice(0, 10)}</p>
+      <p class="work__card_date">{publishedAt?.slice(0, 10)}</p>
       <Heading class="work__card_title">{title}</Heading>
       <p class="work__card_desc">{description}</p>
       <ul class="work__card_tech">

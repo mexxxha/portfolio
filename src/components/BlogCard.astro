@@ -8,7 +8,7 @@ type Props = {
 };
 
 const { post, heading: Heading = 'h3' } = Astro.props;
-const { title, date, description, thumbnail, tags, slug } = post;
+const { title, publishedAt, description, thumbnail, tags, slug } = post;
 ---
 
 <li class="blog__card">
@@ -19,7 +19,7 @@ const { title, date, description, thumbnail, tags, slug } = post;
       </div>
     )}
     <div class="blog__card_body">
-      <p class="blog__card_date">{date.slice(0, 10)}</p>
+      <p class="blog__card_date">{publishedAt?.slice(0, 10)}</p>
       <Heading class="blog__card_title">{title}</Heading>
       <p class="blog__card_desc">{description}</p>
       {tags && (

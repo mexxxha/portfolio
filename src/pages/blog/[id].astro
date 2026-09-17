@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 }
 const { post } = Astro.props;
 const { site } = content;
-const { title, description, date, tags, thumbnail, body } = post;
+const { title, description, publishedAt, tags, thumbnail, body } = post;
 ---
 
 <BaseLayout
@@ -28,7 +28,7 @@ const { title, description, date, tags, thumbnail, body } = post;
 >
   <article class="blog">
     <div class="blog__inner">
-      <p class="blog__date">{date}</p>
+      <p class="blog__date">{publishedAt?.slice(0, 10)}</p>
       <h1 class="blog__title">{title}</h1>
       <p class="blog__desc">{description}</p>
 
