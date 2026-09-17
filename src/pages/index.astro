@@ -1,6 +1,7 @@
 ---
 
 import BaseLayout from '../layouts/BaseLayout.astro';
+import JsonLd from '../components/JsonLd.astro';
 import Hero from '../sections/Hero.astro';
 import About from '../sections/About.astro';
 import Skills from '../sections/Skills.astro';
@@ -10,9 +11,30 @@ import Contact from '../sections/Contact.astro';
 
 import { content } from '../data/content';
 
+
+const siteUrl = Astro.site!;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      name: content.site.title,
+      url: siteUrl.href,
+      inLanguage: 'ja',
+    },
+    {
+      '@type': 'Person',
+      name: content.about.profile.name,
+      url: siteUrl.href,
+      jobTitle: content.about.profile.role,
+      sameAs: content.socials.map((item) => item.href),
+    },
+  ],
+};
 ---
 
 <BaseLayout site={content.site} >
+	<JsonLd slot="head" data={jsonLd} />
 	<Hero />
 	<About />
 	<Skills />

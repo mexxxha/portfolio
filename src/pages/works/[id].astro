@@ -4,6 +4,7 @@ import { Icon } from 'astro-icon/components';
 import { getWorks, type Work } from '../../lib/microcms';
 import { content } from '../../data/content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import JsonLd from '../../components/JsonLd.astro';
 
 interface Props {
   work: Work;
@@ -20,6 +21,24 @@ export async function getStaticPaths() {
 const { work } = Astro.props;
 const { site } = content;
 const { title, description, publishedAt, type, tech, thumbnail, liveUrl, body } = work;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  name: title,
+  description,
+  datePublished: publishedAt,
+  url: new URL(`/works/${work.slug}`, Astro.site).href,
+  ...(liveUrl && { sameAs: liveUrl }),
+  inLanguage: 'ja',
+  author: {
+    '@type': 'Person',
+    name: content.about.profile.name,
+    url: Astro.site!.href,
+  },
+  image: thumbnail.url,
+  ...(type?.length && { genre: type }),
+  ...(tech?.length && { keywords: tech }),
+};
 ---
 
 <BaseLayout
@@ -30,6 +49,7 @@ const { title, description, publishedAt, type, tech, thumbnail, liveUrl, body } 
     ogImage: thumbnail.url,
   }}
 >
+  <JsonLd slot="head" data={jsonLd} />
   <article class="work">
     <div class="work__inner">
       <div class="work__meta">
