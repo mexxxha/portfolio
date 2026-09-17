@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
 import { getWorks, type Work } from '../../lib/microcms';
 import { content } from '../../data/content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -52,6 +53,7 @@ const { title, description, publishedAt, type, tech, thumbnail, liveUrl, body } 
           <p class="work__external">
             <a class="work__external_link" href={liveUrl} aria-label="View Site（新しいタブで開く）" target="_blank" rel="noopener noreferrer">
               View Site
+              <Icon class="work__external_icon" name="ei:external-link" aria-hidden="true" />
             </a>
           </p>
         )
@@ -143,15 +145,16 @@ const { title, description, publishedAt, type, tech, thumbnail, liveUrl, body } 
           background-color 0.4s ease,
           border-color 0.4s ease;
 
-        &::after {
-          content: '↗';
-        }
-
         &:hover {
           color: $c-text-a;
           background-color: $c-bg-a;
           border-color: $c-bg-a;
         }
+      }
+
+      &_icon {
+        width: 20px;
+        height: 20px;
       }
     }
 
