@@ -48,18 +48,20 @@ const isCurrent = (href: string) => {
       <SnsList />
     </div>
   </div>
-  <ul class="header__sns">
-    {
-      socials.map((item) => (
-        <li class="header__sns_item">
-          <a class="header__sns_link" href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.ariaLabel}>
-            <Icon class="header__sns_icon" name={item.icon} />
-            <span class="header__sns_label">{item.label}</span>
-          </a>
-        </li>
-      ))
-    }
-  </ul>
+  <div class="header__inner">
+    <ul class="header__sns">
+      {
+        socials.map((item) => (
+          <li class="header__sns_item">
+            <a class="header__sns_link" href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.ariaLabel}>
+              <Icon class="header__sns_icon" name={item.icon} />
+              <span class="header__sns_label">{item.label}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </header>
 
 <style is:inline>
@@ -83,6 +85,7 @@ const isCurrent = (href: string) => {
 
     &__nav {
       position: absolute;
+      top: 35px;
       left: 50%;
       transform: translateX(-50%);
 
@@ -217,6 +220,7 @@ const isCurrent = (href: string) => {
       flex-direction: column;
       align-items: flex-end;
       gap: 8px;
+      pointer-events: auto;
 
       &_link {
         display: flex;
@@ -266,6 +270,18 @@ const isCurrent = (href: string) => {
         max-width: 5rem;
         opacity: 1;
       }
+    }
+
+    &__inner {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      top: 24px;
+      display: flex;
+      justify-content: flex-end;
+      max-width: $inner;
+      margin-inline: auto;
+      pointer-events: none;
     }
   }
 
