@@ -9,7 +9,7 @@ type Props = {
 };
 
 const { work, heading: Heading = 'h3', variant = 'stack' } = Astro.props;
-const { title, publishedAt, description, thumbnail, tech, slug } = work;
+const { title, publishedAt, description, thumbnail, tech, type, slug } = work;
 ---
 
 <li class:list={['work__card', variant === 'row' && 'work__card_row']}>
@@ -19,17 +19,23 @@ const { title, publishedAt, description, thumbnail, tech, slug } = work;
     </div>
     <div class="work__card_body">
       <p class="work__card_date">{publishedAt?.slice(0, 10)}</p>
+      {
+        type?.length > 0 && (
+          <ul class="work__card_types">
+            {type.map((item) => (
+              <li class="work__card_item">{item}</li>
+            ))}
+          </ul>
+        )
+      }
       <Heading class="work__card_title">{title}</Heading>
       <p class="work__card_desc">{description}</p>
       <ul class="work__card_tech">
-        {tech.map((item) => (
-          <li class="work__card_item">{item}</li>
-        ))}
+        {tech.map((item) => <li class="work__card_item">{item}</li>)}
       </ul>
     </div>
   </a>
 </li>
-
 
 <style lang="scss">
   .work__card {
@@ -40,9 +46,8 @@ const { title, publishedAt, description, thumbnail, tech, slug } = work;
       padding: 16px;
       border: 0.5px solid $c-border;
       border-radius: 8px;
-      transition:
-        border-color 0.4s ease;
-      
+      transition: border-color 0.4s ease;
+
       &:hover {
         border-color: $c-text;
       }
@@ -69,6 +74,12 @@ const { title, publishedAt, description, thumbnail, tech, slug } = work;
       font-size: 0.7rem;
       letter-spacing: 0.08em;
       opacity: 0.7;
+    }
+
+    &_types {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     &_title {

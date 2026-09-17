@@ -81,7 +81,7 @@ export const content = {
       facts: [
         { label: 'Based in', value: 'Tokyo, Japan' },
         { label: 'Born', value: '1996' },
-        { label: 'Experience', value: 'since2024' },
+        { label: 'Experience', value: 'Since2024' },
       ],
     },
   },
