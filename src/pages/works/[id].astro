@@ -1,26 +1,24 @@
 ---
 import { Image } from 'astro:assets';
-import { getCollection, render } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getWorks, type Work } from '../../lib/microcms';
 import { content } from '../../data/content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
 interface Props {
-  entry: CollectionEntry<'works'>;
+  work: Work;
 }
 
 export async function getStaticPaths() {
-  const works = await getCollection('works');
-  return works.map((entry) => ({
-    params: { id: entry.id },
-    props: { entry },
+  const { contents } = await getWorks();
+  return contents.map((work) => ({
+    params: { id: work.slug },
+    props: { work },
   }));
 }
 
-const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { work } = Astro.props;
 const { site } = content;
-const { title, description, date, type, tech, thumbnail, liveUrl } = entry.data;
+const { title, description, date, type, tech, thumbnail, liveUrl, body } = work;
 ---
 
 <BaseLayout
@@ -33,7 +31,7 @@ const { title, description, date, type, tech, thumbnail, liveUrl } = entry.data;
   <article class="work">
     <div class="work__inner">
       <p class="work__meta">
-        <span class="work__date">{date}</span>
+        <span class="work__date">{date.slice(0, 10)}</span>
         <span class="work__type">{type}</span>
       </p>
 
@@ -41,7 +39,7 @@ const { title, description, date, type, tech, thumbnail, liveUrl } = entry.data;
       <p class="work__desc">{description}</p>
 
       <div class="work__media">
-        <Image class="work__image" src={thumbnail} alt={title} />
+        <Image class="work__image" src={thumbnail.url} alt={title} inferSize />
       </div>
 
       <ul class="work__tech">
@@ -58,9 +56,7 @@ const { title, description, date, type, tech, thumbnail, liveUrl } = entry.data;
         )
       }
 
-      <div class="work__content">
-        <Content />
-      </div>
+      <div class="work__content" set:html={body} />
 
       <nav class="work__nav" aria-label="作品ページのナビ">
         <a class="work__nav_link" href="/works">一覧に戻る</a>

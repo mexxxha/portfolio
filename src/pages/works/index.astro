@@ -1,13 +1,14 @@
 ---
-import { getCollection } from 'astro:content';
+import { getWorks } from '../../lib/microcms';
+import { content } from '../../data/content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionTitle from '../../components/SectionTitle.astro';
 import PillLink from '../../components/PillLink.astro';
 import WorkCard from '../../components/WorkCard.astro';
-import { content } from '../../data/content';
+
 
 const { sectionTitles, site } = content;
-const works = (await getCollection('works')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+const { contents: works } = await getWorks();
 ---
 
 <BaseLayout
@@ -25,8 +26,8 @@ const works = (await getCollection('works')).sort((a, b) => b.data.date.localeCo
           <p class="works__empty">{sectionTitles.works.empty}</p>
         ) : (
           <ul class="works__list">
-            {works.map((entry) => (
-              <WorkCard entry={entry} heading="h3" />
+            {works.map((work) => (
+              <WorkCard work={work} heading="h3" />
             ))}
           </ul>
         )

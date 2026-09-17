@@ -1,15 +1,14 @@
 ---
-import { getCollection } from 'astro:content';
+import { getWorks } from '../lib/microcms';
 import { content } from '../data/content';
 import SectionTitle from '../components/SectionTitle.astro';
 import PillLink from '../components/PillLink.astro';
 import WorkCard  from '../components/WorkCard.astro';
 
 const { sectionTitles } = content;
-const works = await getCollection('works');
-const sorted = works.sort((a, b) => b.data.date.localeCompare(a.data.date));
-const items = sorted.slice(0, 3);
-const hasMore = sorted.length > 3;
+const { contents } = await getWorks();
+const items = contents.slice(0, 3);
+const hasMore = contents.length > 3;
 ---
 
 <section class="works" id="works">
@@ -21,8 +20,8 @@ const hasMore = sorted.length > 3;
       ) : (
         <>
           <ul class="works__list">
-            {items.map((entry) => (
-              <WorkCard entry={entry} heading="h3" variant="row" />
+            {items.map((work) => (
+              <WorkCard work={work} heading="h3" variant="row" />
             ) )}
           </ul>
           {hasMore && (

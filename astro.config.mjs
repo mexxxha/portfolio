@@ -8,6 +8,9 @@ export default defineConfig({
   site: 'https://mexcha.com',
   integrations: [icon(), sitemap()],
   output: 'static',
+  image: {
+    domains: ['images.microcms-assets.io'],
+  },
   vite: {
     css: {
       preprocessorOptions: {

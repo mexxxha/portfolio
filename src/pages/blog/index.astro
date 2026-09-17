@@ -1,15 +1,13 @@
 ---
-import { getCollection } from 'astro:content';
+import { getBlogs } from '../../lib/microcms';
+import { content } from '../../data/content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionTitle from '../../components/SectionTitle.astro';
 import PillLink from '../../components/PillLink.astro';
 import BlogCard from '../../components/BlogCard.astro';
-import { content } from '../../data/content';
 
 const { sectionTitles, site } = content;
-const posts = (await getCollection('blog')).sort((a, b) =>
-  b.data.date.localeCompare(a.data.date),
-);
+const { contents: posts } = await getBlogs();
 ---
 
 <BaseLayout
@@ -27,8 +25,8 @@ const posts = (await getCollection('blog')).sort((a, b) =>
           <p class="blog__empty">{sectionTitles.blog.empty}</p>
         ) : (
           <ul class="blog__list">
-            {posts.map((entry) => (
-              <BlogCard entry={entry} heading="h3" />
+            {posts.map((post) => (
+              <BlogCard post={post} heading="h3" />
             ))}
           </ul>
         )

@@ -1,24 +1,24 @@
 ---
-import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
+import type { Work } from '../lib/microcms';
 
 type Props = {
-  entry: CollectionEntry<'works'>;
+  work: Work;
   heading?: 'h2' | 'h3';
   variant?: 'row' | 'stack';
 };
 
-const { entry, heading: Heading = 'h3', variant = 'stack' } = Astro.props;
-const { title, date, description, thumbnail, tech } = entry.data;
+const { work, heading: Heading = 'h3', variant = 'stack' } = Astro.props;
+const { title, date, description, thumbnail, tech, slug } = work;
 ---
 
 <li class:list={['work__card', variant === 'row' && 'work__card_row']}>
-  <a class="work__card_link" href={`/works/${entry.id}`} aria-label={`${title}の詳細`}>
+  <a class="work__card_link" href={`/works/${slug}`} aria-label={`${title}の詳細`}>
     <div class="work__card_media">
-      <Image class="work__card_image" src={thumbnail} alt={title} />
+      <Image class="work__card_image" src={thumbnail.url} alt={title} inferSize />
     </div>
     <div class="work__card_body">
-      <p class="work__card_date">{date}</p>
+      <p class="work__card_date">{date.slice(0, 10)}</p>
       <Heading class="work__card_title">{title}</Heading>
       <p class="work__card_desc">{description}</p>
       <ul class="work__card_tech">
@@ -29,6 +29,7 @@ const { title, date, description, thumbnail, tech } = entry.data;
     </div>
   </a>
 </li>
+
 
 <style lang="scss">
   .work__card {

@@ -1,25 +1,25 @@
 ---
-import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
+import type { Blog } from '../lib/microcms';
 
 type Props = {
-  entry: CollectionEntry<'blog'>;
+  post: Blog;
   heading?: 'h2' | 'h3';
 };
 
-const { entry, heading: Heading = 'h3' } = Astro.props;
-const { title, date, description, thumbnail, tags } = entry.data;
+const { post, heading: Heading = 'h3' } = Astro.props;
+const { title, date, description, thumbnail, tags, slug } = post;
 ---
 
 <li class="blog__card">
-  <a class="blog__card_link" href={`/blog/${entry.id}`} aria-label={`${title}の記事`}>
+  <a class="blog__card_link" href={`/blog/${slug}`} aria-label={`${title}の記事`}>
     {thumbnail && (
       <div class="blog__card_media">
-        <Image class="blog__card_image" src={thumbnail} alt={title} />
+        <Image class="blog__card_image" src={thumbnail.url} alt={title} inferSize />
       </div>
     )}
     <div class="blog__card_body">
-      <p class="blog__card_date">{date}</p>
+      <p class="blog__card_date">{date.slice(0, 10)}</p>
       <Heading class="blog__card_title">{title}</Heading>
       <p class="blog__card_desc">{description}</p>
       {tags && (

@@ -1,26 +1,21 @@
 ---
 import { Image } from 'astro:assets';
-import { getCollection, render } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getBlogs, type Blog } from '../../lib/microcms';
 import { content } from '../../data/content';
-
+import BaseLayout from '../../layouts/BaseLayout.astro';
 interface Props {
-  entry: CollectionEntry<'blog'>;
+  post: Blog;
 }
-
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts.map((entry) => ({
-    params: { id: entry.id },
-    props: { entry },
+  const { contents } = await getBlogs();
+  return contents.map((post) => ({
+    params: { id: post.slug },
+    props: { post },
   }));
 }
-
-const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { post } = Astro.props;
 const { site } = content;
-const { title, description, date, tags, thumbnail } = entry.data;
+const { title, description, date, tags, thumbnail, body } = post;
 ---
 
 <BaseLayout
@@ -49,14 +44,12 @@ const { title, description, date, tags, thumbnail } = entry.data;
       {
         thumbnail && (
           <div class="blog__media">
-            <Image class="blog__image" src={thumbnail} alt={title} />
+            <Image class="blog__image" src={thumbnail.url} alt={title} inferSize />
           </div>
         )
       }
 
-      <div class="blog__content">
-        <Content />
-      </div>
+      <div class="blog__content" set:html={body} />
 
       <nav class="blog__nav" aria-label="ブログページのナビ">
         <a class="blog__nav_link" href="/blog">一覧に戻る</a>
