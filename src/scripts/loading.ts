@@ -2,7 +2,8 @@ const MIN_MS = 3000;
 const MORPH_MS = 800;
 const FLAG = 'site-loaded';
 
-// --- Flag ---
+const easeOut = (t: number) => 1 - (1 - t) ** 3;
+
 const hasLoaded = () => sessionStorage.getItem(FLAG) === '1';
 
 const markLoaded = () => {
@@ -10,7 +11,6 @@ const markLoaded = () => {
   document.documentElement.classList.add('is-loaded');
 };
 
-// --- Hide ---
 const suppress = () => {
   markLoaded();
   document.querySelectorAll<HTMLElement>('.loading').forEach((el) => {
@@ -29,7 +29,22 @@ const finishLoading = (el: HTMLElement) => {
   }, 400);
 };
 
-// --- Morph ---
+const tickProgress = (root: HTMLElement) => {
+  const label = root.querySelector('[data-loading-percent]');
+  const fill = root.querySelector<HTMLElement>('.loading__bar_fill');
+  const started = performance.now();
+
+  const loop = (now: number) => {
+    const t = Math.min(1, (now - started) / MIN_MS);
+    const eased = easeOut(t);
+    if (label) label.textContent = `${Math.round(eased * 100)}%`;
+    if (fill) fill.style.transform = `scaleX(${eased})`;
+    if (t < 1) requestAnimationFrame(loop);
+  };
+
+  requestAnimationFrame(loop);
+};
+
 const pinLogo = (from: HTMLElement, fromRect: DOMRect) => {
   from.style.position = 'fixed';
   from.style.top = `${fromRect.top}px`;
@@ -73,7 +88,6 @@ const morphLogoThenHide = (loadingRoot: HTMLElement) => {
   }, MORPH_MS);
 };
 
-// --- Boot ---
 const start = () => {
   const el = document.querySelector<HTMLElement>('.loading');
   if (!el) return;
@@ -84,6 +98,7 @@ const start = () => {
   }
 
   document.querySelector<HTMLElement>('[data-hero-logo]')?.classList.add('is-waiting');
+  tickProgress(el);
 
   const started = performance.now();
   const finish = () => {
