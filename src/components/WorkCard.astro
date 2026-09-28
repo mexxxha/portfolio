@@ -13,7 +13,7 @@ const { title, publishedAt, description, thumbnail, tech, type, slug } = work;
 ---
 
 <li class:list={['work__card', variant === 'row' && 'work__card_row']}>
-  <a class="work__card_link" href={`/works/${slug}`} aria-label={`${title}の詳細`}>
+  <a class="work__card_link" href={`/works/${slug}/`} aria-label={`${title}の詳細`}>
     <div class="work__card_media">
       <Image class="work__card_image" src={thumbnail.url} alt={title} inferSize />
     </div>

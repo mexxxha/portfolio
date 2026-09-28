@@ -18,10 +18,10 @@ export const content = {
 
   nav: [
     { label: 'HOME', href: '/' },
-    { label: 'ABOUT', href: '/about' },
-    { label: 'WORKS', href: '/works' },
-    { label: 'BLOG', href: '/blog' },
-    { label: 'CONTACT', href: '/contact' },
+    { label: 'ABOUT', href: '/about/' },
+    { label: 'WORKS', href: '/works/' },
+    { label: 'BLOG', href: '/blog/' },
+    { label: 'CONTACT', href: '/contact/' },
   ],
 
   logo: {
@@ -81,7 +81,7 @@ export const content = {
       facts: [
         { label: 'Based in', value: 'Tokyo, Japan' },
         { label: 'Born', value: '1996' },
-        { label: 'Experience', value: 'Since2024' },
+        { label: 'Experience', value: 'Since 2024' },
       ],
     },
   },

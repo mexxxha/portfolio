@@ -12,7 +12,7 @@ const { title, publishedAt, description, thumbnail, tags, slug } = post;
 ---
 
 <li class="blog__card">
-  <a class="blog__card_link" href={`/blog/${slug}`} aria-label={`${title}の記事`}>
+  <a class="blog__card_link" href={`/blog/${slug}/`} aria-label={`${title}の記事`}>
     {thumbnail && (
       <div class="blog__card_media">
         <Image class="blog__card_image" src={thumbnail.url} alt={title} inferSize />

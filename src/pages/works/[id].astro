@@ -27,7 +27,7 @@ const jsonLd = {
   name: title,
   description,
   datePublished: publishedAt,
-  url: new URL(`/works/${work.slug}`, Astro.site).href,
+  url: new URL(`/works/${work.slug}/`, Astro.site).href,
   ...(liveUrl && { sameAs: liveUrl }),
   inLanguage: 'ja',
   author: {
@@ -84,7 +84,7 @@ const jsonLd = {
       <div class="work__content" set:html={body} />
 
       <nav class="work__nav" aria-label="作品ページのナビ">
-        <a class="work__nav_link" href="/works">一覧に戻る</a>
+        <a class="work__nav_link" href="/works/">一覧に戻る</a>
         <a class="work__nav_link" href="/">トップに戻る</a>
       </nav>
     </div>

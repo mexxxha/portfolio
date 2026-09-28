@@ -24,7 +24,7 @@ const jsonLd = {
   headline: title,
   description,
   datePublished: publishedAt,
-  url: new URL(`/blog/${post.slug}`, Astro.site).href,
+  url: new URL(`/blog/${post.slug}/`, Astro.site).href,
   inLanguage: 'ja',
   author: {
     '@type': 'Person',
@@ -72,7 +72,7 @@ const jsonLd = {
       <div class="blog__content" set:html={body} />
 
       <nav class="blog__nav" aria-label="ブログページのナビ">
-        <a class="blog__nav_link" href="/blog">一覧に戻る</a>
+        <a class="blog__nav_link" href="/blog/">一覧に戻る</a>
         <a class="blog__nav_link" href="/">トップに戻る</a>
       </nav>
     </div>
