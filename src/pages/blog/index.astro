@@ -19,7 +19,7 @@ const { contents: posts } = await getBlogs();
 >
   <section class="blog">
     <div class="blog__inner">
-      <SectionTitle content={sectionTitles.blog} />
+      <SectionTitle content={sectionTitles.blog} level="h1" />
       {
         posts.length === 0 ? (
           <p class="blog__empty">{sectionTitles.blog.empty}</p>

@@ -20,7 +20,7 @@ const { contents: works } = await getWorks();
 >
   <section class="works">
     <div class="works__inner">
-      <SectionTitle content={sectionTitles.works} />
+      <SectionTitle content={sectionTitles.works} level="h1" />
       {
         works.length === 0 ? (
           <p class="works__empty">{sectionTitles.works.empty}</p>

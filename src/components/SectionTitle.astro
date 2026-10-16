@@ -3,16 +3,18 @@ import type { SectionTitleContent } from '../types/type';
 
 interface Props {
   content: SectionTitleContent;
+  level?: 'h1' | 'h2';
 }
 
-const { content } = Astro.props;
+const { content, level = 'h2' } = Astro.props;
+const Heading = level;
 ---
 
 <div class="section__title">
   <p class="section__title_sub" data-shuffle-text data-shuffle-original={content.subtitle}>
     {content.subtitle}
   </p>
-  <h2 class="section__title_title">{content.title}</h2>
+  <Heading class="section__title_title">{content.title}</Heading>
 </div>
 
 <style lang="scss">

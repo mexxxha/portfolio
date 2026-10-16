@@ -10,13 +10,13 @@ const LogoIcon = logo.src;
 <section class="hero">
   <Image class="hero__image" src={hero.image} alt={hero.imageAlt} layout="full-width" loading="eager" />
   <div class="hero__inner">
-    <h1 class="hero__logo">
+    <div class="hero__logo">
       <a href="/" class="hero__logo_link" aria-label="ホームへ戻る">
         <LogoIcon class="hero__logo_img" data-hero-logo aria-hidden="true" focusable="false" />
       </a>
-    </h1>
+    </div>
     <div class="hero__bottom">
-      <SectionTitle content={sectionTitles.hero} />
+      <SectionTitle content={{ ...sectionTitles.hero, title: 'Mecha' }} level="h1" />
       <p class="hero__scroll">SCROLL</p>
     </div>
   </div>

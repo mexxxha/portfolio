@@ -33,7 +33,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout site={content.site} >
+<BaseLayout site={{ ...content.site, title: 'Mecha（めちゃ）' }} >
 	<JsonLd slot="head" data={jsonLd} />
 	<Hero />
 	<About />
