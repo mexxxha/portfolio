@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
+import { formatPublishedDate } from '../../lib/date';
 import { getWorks, type Work } from '../../lib/microcms';
 import { content } from '../../data/content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -46,17 +47,27 @@ const jsonLd = {
     ...site,
     title: `${title} | ${site.title}`,
     description,
+    ogType: 'article',
+    publishedTime: publishedAt,
     ogImage: thumbnail.url,
+    ogImageWidth: thumbnail.width,
+    ogImageHeight: thumbnail.height,
   }}
 >
   <JsonLd slot="head" data={jsonLd} />
   <article class="work">
     <div class="work__inner">
       <div class="work__meta">
-        <span class="work__date">{publishedAt?.slice(0, 10)}</span>
-        <ul class="work__types">
-          {type.map((item) => <li class="work__type">{item}</li>)}
-        </ul>
+        <span class="work__date">{formatPublishedDate(publishedAt)}</span>
+        {
+          type && type.length > 0 && (
+            <ul class="work__types">
+              {type.map((item) => (
+                <li class="work__type">{item}</li>
+              ))}
+            </ul>
+          )
+        }
       </div>
 
       <h1 class="work__title">{title}</h1>
@@ -66,9 +77,15 @@ const jsonLd = {
         <Image class="work__image" src={thumbnail.url} alt={title} inferSize />
       </div>
 
-      <ul class="work__tech">
-        {tech.map((item) => <li class="work__tech_item">{item}</li>)}
-      </ul>
+      {
+        tech && tech.length > 0 && (
+          <ul class="work__tech">
+            {tech.map((item) => (
+              <li class="work__tech_item">{item}</li>
+            ))}
+          </ul>
+        )
+      }
 
       {
         liveUrl && (
@@ -197,25 +214,7 @@ const jsonLd = {
     &__content {
       margin-top: 40px;
       font-size: 0.9rem;
-
-      :global(h2) {
-        margin: 2em 0 0.7em;
-        font-size: 1rem;
-      }
-
-      :global(p) {
-        margin: 0 0 1em;
-      }
-
-      :global(ul) {
-        margin: 0 0 1em;
-        padding-left: 1em;
-        list-style: disc;
-      }
-
-      :global(li + li) {
-        margin-top: 0.3em;
-      }
+      @include rich-text;
     }
 
     &__nav {

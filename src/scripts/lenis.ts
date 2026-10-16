@@ -12,11 +12,13 @@ let lenis: Lenis | null = null;
 const stop = () => {
   lenis?.destroy();
   lenis = null;
+  document.documentElement.style.scrollBehavior = '';
 };
 
 const start = () => {
   stop();
   if (!canUseLenis()) return;
+  document.documentElement.style.scrollBehavior = 'auto';
   lenis = new Lenis({ autoRaf: true, lerp: 0.1, duration: 1.2, anchors: true });
 };
 

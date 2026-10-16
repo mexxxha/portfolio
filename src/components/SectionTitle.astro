@@ -4,9 +4,10 @@ import type { SectionTitleContent } from '../types/type';
 interface Props {
   content: SectionTitleContent;
   level?: 'h1' | 'h2';
+  label?: string;
 }
 
-const { content, level = 'h2' } = Astro.props;
+const { content, level = 'h2', label } = Astro.props;
 const Heading = level;
 ---
 
@@ -14,12 +15,36 @@ const Heading = level;
   <p class="section__title_sub" data-shuffle-text data-shuffle-original={content.subtitle}>
     {content.subtitle}
   </p>
-  <Heading class="section__title_title">{content.title}</Heading>
+  <Heading class="section__title_title">
+    {
+      label ? (
+        <>
+          <span class="visually-hidden">{label}</span>
+          <span aria-hidden="true">{content.title}</span>
+        </>
+      ) : (
+        content.title
+      )
+    }
+  </Heading>
 </div>
 
 <style lang="scss">
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   .section__title {
     &_title {
+      position: relative;
       font-family: 'Libre Barcode 39', cursive;
       font-size: $fs-display;
       line-height: 1.2;

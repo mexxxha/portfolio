@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import { content } from '../data/content';
 import SectionTitle from '../components/SectionTitle.astro';
 
-const { logo, hero, sectionTitles } = content;
+const { logo, hero, sectionTitles, about } = content;
 const LogoIcon = logo.src;
 ---
 
@@ -16,7 +16,7 @@ const LogoIcon = logo.src;
       </a>
     </div>
     <div class="hero__bottom">
-      <SectionTitle content={{ ...sectionTitles.hero, title: 'Mecha' }} level="h1" />
+      <SectionTitle content={sectionTitles.hero} level="h1" label={about.profile.name} />
       <p class="hero__scroll">SCROLL</p>
     </div>
   </div>

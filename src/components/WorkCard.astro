@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { formatPublishedDate } from '../lib/date';
 import type { Work } from '../lib/microcms';
 
 type Props = {
@@ -13,14 +14,14 @@ const { title, publishedAt, description, thumbnail, tech, type, slug } = work;
 ---
 
 <li class:list={['work__card', variant === 'row' && 'work__card_row']}>
-  <a class="work__card_link" href={`/works/${slug}/`} aria-label={`${title}の詳細`}>
+  <a class="work__card_link" href={`/works/${slug}/`}>
     <div class="work__card_media">
       <Image class="work__card_image" src={thumbnail.url} alt={title} inferSize />
     </div>
     <div class="work__card_body">
-      <p class="work__card_date">{publishedAt?.slice(0, 10)}</p>
+      <p class="work__card_date">{formatPublishedDate(publishedAt)}</p>
       {
-        type?.length > 0 && (
+        type && type.length > 0 && (
           <ul class="work__card_types">
             {type.map((item) => (
               <li class="work__card_item">{item}</li>
@@ -30,9 +31,15 @@ const { title, publishedAt, description, thumbnail, tech, type, slug } = work;
       }
       <Heading class="work__card_title">{title}</Heading>
       <p class="work__card_desc">{description}</p>
-      <ul class="work__card_tech">
-        {tech.map((item) => <li class="work__card_item">{item}</li>)}
-      </ul>
+      {
+        tech && tech.length > 0 && (
+          <ul class="work__card_tech">
+            {tech.map((item) => (
+              <li class="work__card_item">{item}</li>
+            ))}
+          </ul>
+        )
+      }
     </div>
   </a>
 </li>

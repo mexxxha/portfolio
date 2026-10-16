@@ -17,7 +17,7 @@ const { skill, learning } = content.skills;
           {
             skill.items.map((item) => (
               <li class="skills__item">
-                <Icon class="skills__icon" name={item.icon} />
+                <Icon class="skills__icon" name={item.icon} aria-hidden="true" />
                 <span class="skills__name">{item.name}</span>
               </li>
             ))
@@ -30,7 +30,7 @@ const { skill, learning } = content.skills;
           {
             learning.items.map((item) => (
               <li class="skills__item">
-                <Icon class="skills__icon" name={item.icon} />
+                <Icon class="skills__icon" name={item.icon} aria-hidden="true" />
                 <span class="skills__name">{item.name}</span>
               </li>
             ))

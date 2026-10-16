@@ -5,10 +5,12 @@ import profileImage from '../assets/profile.jpg';
 
 export const content = {
   site: {
-    title: 'Mecha',
+    title: 'Mecha（めちゃ）',
     description: 'Mecha（mexcha.com）のポートフォリオ。フロントエンドを中心に制作しています。',
     lang: 'ja',
     ogImage: '/ogp.png',
+    ogImageWidth: 1200,
+    ogImageHeight: 628,
   } satisfies SiteContent,
 
   socials: [

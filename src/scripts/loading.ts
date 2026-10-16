@@ -1,3 +1,5 @@
+import { setPageLock } from './pageLock';
+
 const MIN_MS = 3000;
 const MORPH_MS = 800;
 const FLAG = 'site-loaded';
@@ -5,6 +7,7 @@ const FLAG = 'site-loaded';
 const easeOut = (t: number) => 1 - (1 - t) ** 3;
 
 const hasLoaded = () => sessionStorage.getItem(FLAG) === '1';
+const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const markLoaded = () => {
   sessionStorage.setItem(FLAG, '1');
@@ -13,6 +16,7 @@ const markLoaded = () => {
 
 const suppress = () => {
   markLoaded();
+  setPageLock('loading', false);
   document.querySelectorAll<HTMLElement>('.loading').forEach((el) => {
     el.style.display = 'none';
     el.setAttribute('hidden', '');
@@ -22,6 +26,7 @@ const suppress = () => {
 
 const finishLoading = (el: HTMLElement) => {
   markLoaded();
+  setPageLock('loading', false);
   el.classList.add('is-hidden');
   window.setTimeout(() => {
     el.setAttribute('hidden', '');
@@ -92,11 +97,12 @@ const start = () => {
   const el = document.querySelector<HTMLElement>('.loading');
   if (!el) return;
 
-  if (hasLoaded()) {
+  if (hasLoaded() || prefersReducedMotion()) {
     suppress();
     return;
   }
 
+  setPageLock('loading', true);
   document.querySelector<HTMLElement>('[data-hero-logo]')?.classList.add('is-waiting');
   tickProgress(el);
 

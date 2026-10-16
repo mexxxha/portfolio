@@ -27,7 +27,7 @@ const { contents: works } = await getWorks();
         ) : (
           <ul class="works__list">
             {works.map((work) => (
-              <WorkCard work={work} heading="h3" />
+              <WorkCard work={work} heading="h2" />
             ))}
           </ul>
         )

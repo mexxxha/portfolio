@@ -11,6 +11,20 @@ html:not(.is-loaded) {
   overflow: hidden;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  html:not(.is-loaded) {
+    overflow: auto;
+  }
+
+  .loading {
+    display: none;
+  }
+}
+
 .hero__logo_img.is-waiting {
   opacity: 0;
 }

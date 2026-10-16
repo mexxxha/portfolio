@@ -5,6 +5,10 @@ export interface SiteContent {
   description: string;
   lang: string;
   ogImage: string;
+  ogType?: 'website' | 'article';
+  publishedTime?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
 }
 
 export interface SocialLink {

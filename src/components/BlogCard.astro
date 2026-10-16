@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { formatPublishedDate } from '../lib/date';
 import type { Blog } from '../lib/microcms';
 
 type Props = {
@@ -12,14 +13,14 @@ const { title, publishedAt, description, thumbnail, tags, slug } = post;
 ---
 
 <li class="blog__card">
-  <a class="blog__card_link" href={`/blog/${slug}/`} aria-label={`${title}の記事`}>
+  <a class="blog__card_link" href={`/blog/${slug}/`}>
     {thumbnail && (
       <div class="blog__card_media">
         <Image class="blog__card_image" src={thumbnail.url} alt={title} inferSize />
       </div>
     )}
     <div class="blog__card_body">
-      <p class="blog__card_date">{publishedAt?.slice(0, 10)}</p>
+      <p class="blog__card_date">{formatPublishedDate(publishedAt)}</p>
       <Heading class="blog__card_title">{title}</Heading>
       <p class="blog__card_desc">{description}</p>
       {tags && (

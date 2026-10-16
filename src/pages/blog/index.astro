@@ -26,7 +26,7 @@ const { contents: posts } = await getBlogs();
         ) : (
           <ul class="blog__list">
             {posts.map((post) => (
-              <BlogCard post={post} heading="h3" />
+              <BlogCard post={post} heading="h2" />
             ))}
           </ul>
         )

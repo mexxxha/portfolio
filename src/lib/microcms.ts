@@ -8,8 +8,8 @@ const client = createClient({
 export type Work = {
   title: string;
   description: string;
-  type: string[];
-  tech: string[];
+  type?: string[];
+  tech?: string[];
   thumbnail: MicroCMSImage;
   liveUrl?: string;
   slug: string;
@@ -25,14 +25,40 @@ export type Blog = {
   body: string;
 } & MicroCMSListContent;
 
-export const getWorks = () =>
-  client.getList<Work>({
-    endpoint: 'works',
-    queries: { limit: 100, orders: '-publishedAt' },
+const listAll = async <T>(endpoint: string) => {
+  const limit = 100;
+  const first = await client.getList<T>({
+    endpoint,
+    queries: { limit, orders: '-publishedAt' },
   });
+  const contents = [...first.contents];
 
-export const getBlogs = () =>
-  client.getList<Blog>({
-    endpoint: 'blog',
-    queries: { limit: 100, orders: '-publishedAt' },
+  for (let offset = limit; offset < first.totalCount; offset += limit) {
+    const page = await client.getList<T>({
+      endpoint,
+      queries: { limit, offset, orders: '-publishedAt' },
+    });
+    contents.push(...page.contents);
+  }
+
+  return { contents, totalCount: first.totalCount };
+};
+
+let worksCache: ReturnType<typeof listAll<Work>> | undefined;
+let blogsCache: ReturnType<typeof listAll<Blog>> | undefined;
+
+export const getWorks = () => {
+  worksCache ??= listAll<Work>('works').catch((error: unknown) => {
+    worksCache = undefined;
+    throw error;
   });
+  return worksCache;
+};
+
+export const getBlogs = () => {
+  blogsCache ??= listAll<Blog>('blog').catch((error: unknown) => {
+    blogsCache = undefined;
+    throw error;
+  });
+  return blogsCache;
+};

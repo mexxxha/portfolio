@@ -1,3 +1,5 @@
+import { setPageLock } from './pageLock';
+
 // --- Dom ---
 const header = () => document.querySelector<HTMLElement>('.header');
 const button = () => document.querySelector<HTMLButtonElement>('.header__hamburger');
@@ -15,6 +17,9 @@ const setOpen = (open: boolean) => {
   btn.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
   panel.setAttribute('aria-hidden', String(!open));
   document.body.classList.toggle('is-menu-open', open);
+  setPageLock('menu', open);
+
+  if (open) panel.querySelector<HTMLAnchorElement>('a')?.focus();
 };
 
 const toggle = () => {
@@ -36,7 +41,11 @@ const bind = () => {
   });
 
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') setOpen(false);
+    if (event.key !== 'Escape') return;
+    const current = button();
+    if (current?.getAttribute('aria-expanded') !== 'true') return;
+    setOpen(false);
+    current.focus();
   });
 };
 

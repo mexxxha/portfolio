@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { formatPublishedDate } from '../../lib/date';
 import { getBlogs, type Blog } from '../../lib/microcms';
 import { content } from '../../data/content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -41,13 +42,21 @@ const jsonLd = {
     ...site,
     title: `${title} | ${site.title}`,
     description,
-    ogImage: thumbnail?.url ?? site.ogImage,
+    ogType: 'article',
+    publishedTime: publishedAt,
+    ...(thumbnail
+      ? {
+          ogImage: thumbnail.url,
+          ogImageWidth: thumbnail.width,
+          ogImageHeight: thumbnail.height,
+        }
+      : {}),
   }}
 >
   <JsonLd slot="head" data={jsonLd} />
   <article class="blog">
     <div class="blog__inner">
-      <p class="blog__date">{publishedAt?.slice(0, 10)}</p>
+      <p class="blog__date">{formatPublishedDate(publishedAt)}</p>
       <h1 class="blog__title">{title}</h1>
       <p class="blog__desc">{description}</p>
 
@@ -136,26 +145,7 @@ const jsonLd = {
 
     &__content {
       font-size: 0.9rem;
-
-      :global(h2) {
-        margin: 2em 0 0.7em;
-        font-size: 1rem;
-        font-weight: 700;
-      }
-
-      :global(p) {
-        margin: 0 0 1em;
-      }
-
-      :global(ul) {
-        margin: 0 0 1.2em;
-        padding-left: 1.2em;
-        list-style: disc;
-      }
-
-      :global(li + li) {
-        margin-top: 0.3em;
-      }
+      @include rich-text;
     }
 
     &__nav {
