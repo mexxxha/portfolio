@@ -9,8 +9,8 @@ export const content = {
     alternateName: 'Mecha（めちゃ）'
   },
   site: {
-    title: 'Mecha（めちゃ）',
-    description: 'Mecha（mexcha.com）のポートフォリオ。フロントエンドを中心に制作しています。',
+    title: 'Mecha',
+    description: '東京を拠点にWeb制作を行うMechaのポートフォリオ。LP・コーポレートサイトなどの制作実績やプロフィールを掲載しています。',
     lang: 'ja',
     ogImage: '/ogp.png',
     ogImageWidth: 1200,
