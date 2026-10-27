@@ -59,7 +59,8 @@
   }
 
   :global(img) {
-    width: 100%;
+    width: auto;
+    max-width: 100%;
     height: auto;
     margin: 0 0 1em;
     border-radius: 8px;
