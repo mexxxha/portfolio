@@ -10,7 +10,7 @@ export const content = {
   },
   site: {
     title: 'Mecha',
-    description: '東京を拠点にWeb制作を行うMechaのポートフォリオ。LP・コーポレートサイトなどの制作実績やプロフィールを掲載しています。',
+    description: 'Mechaの個人サイト。ブログ、制作物、個人開発、音楽など、日々の活動や好きなものを記録しています。',
     lang: 'ja',
     ogImage: '/ogp.png',
     ogImageWidth: 1200,
