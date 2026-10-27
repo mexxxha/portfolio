@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { microCMSRichEditorHandler, responsiveImageTransformer } from 'microcms-rich-editor-handler';
 import { formatPublishedDate } from '../../lib/date';
 import { getBlogs, type Blog } from '../../lib/microcms';
 import { content } from '../../data/content';
@@ -19,6 +19,18 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { site } = content;
 const { title, description, publishedAt, tags, thumbnail, body } = post;
+const { html: optimizedBody } = await microCMSRichEditorHandler(body, {
+  transformers: [
+    responsiveImageTransformer({
+      attributes: {
+        sizes: 'auto',
+      },
+      formats: ['default', 'avif'],
+      deviceSizes: [480, 768, 1024, 1280],
+    }),
+  ],
+});
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
@@ -70,15 +82,7 @@ const jsonLd = {
         )
       }
 
-      {
-        thumbnail && (
-          <div class="blog__media">
-            <Image class="blog__image" src={thumbnail.url} alt={title} inferSize />
-          </div>
-        )
-      }
-
-      <div class="blog__content" set:html={body} />
+      <div class="blog__content" set:html={optimizedBody} />
 
       <nav class="blog__nav" aria-label="ブログページのナビ">
         <a class="blog__nav_link" href="/blog/">一覧に戻る</a>
@@ -129,18 +133,6 @@ const jsonLd = {
       border-radius: 999px;
       font-size: 0.6rem;
       letter-spacing: 0.06em;
-    }
-
-    &__media {
-      aspect-ratio: 16 / 10;
-      margin-bottom: 40px;
-      border-radius: 8px;
-      border: 0.5px solid $c-border;
-      overflow: hidden;
-    }
-
-    &__image {
-      height: 100%;
     }
 
     &__content {
