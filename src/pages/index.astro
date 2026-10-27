@@ -18,7 +18,8 @@ const jsonLd = {
   '@graph': [
     {
       '@type': 'WebSite',
-      name: content.site.title,
+      name: content.brand.name,
+      alternateName: content.brand.alternateName,
       url: siteUrl.href,
       inLanguage: 'ja',
     },

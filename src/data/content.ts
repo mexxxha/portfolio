@@ -4,6 +4,10 @@ import heroImage from '../assets/hero.jpg';
 import profileImage from '../assets/profile.jpg';
 
 export const content = {
+  brand: {
+    name: 'Mecha',
+    alternateName: 'Mecha（めちゃ）'
+  },
   site: {
     title: 'Mecha（めちゃ）',
     description: 'Mecha（mexcha.com）のポートフォリオ。フロントエンドを中心に制作しています。',
